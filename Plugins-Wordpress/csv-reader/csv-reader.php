@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: CSV Reader
-Plugin URI: https://github.com/Rafael-Rueda
+Plugin URI: https://github.com/Rafael-Rueda/PHP/tree/main/Plugins-Wordpress/csv-reader
 Description: Reads CSV files and displays them on the frontend.
 Version: 1.0
 Author: Rafael Rueda
