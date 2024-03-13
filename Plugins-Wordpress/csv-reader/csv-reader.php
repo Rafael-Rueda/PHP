@@ -9,7 +9,8 @@ Author URI: https://github.com/Rafael-Rueda
 */
 
 // Function to read a single CSV file and return its data
-function read_csv_and_return_data($file_path) {
+function read_csv_and_return_data($file_path)
+{
     $csv_data = array();
     if (($handle = fopen($file_path, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -21,31 +22,50 @@ function read_csv_and_return_data($file_path) {
 }
 
 // Function to read data from multiple CSV files
-function read_multiple_csv_and_return_data($file_paths) {
+function read_multiple_csv_and_return_data($file_paths)
+{
     $all_csv_data = array();
     foreach ($file_paths as $file_path) {
-        $all_csv_data = array_merge($all_csv_data, read_csv_and_return_data($file_path));
+        $all_csv_data[] = read_csv_and_return_data($file_path);
     }
     return $all_csv_data;
 }
 
 // Shortcode to display CSV data
-function display_csv_data_shortcode() {
+function display_csv_data_shortcode()
+{
     $directory_path = plugin_dir_path(__FILE__) . 'csv_files/';
 
     $file_paths = glob($directory_path . '*.csv');
     $all_csv_data = read_multiple_csv_and_return_data($file_paths);
 
-    // Start building the output
-    $output = "<table style='width:100%;border-collapse:collapse;' border='1'>";
-    foreach ($all_csv_data as $row) {
-        $output .= "<tr>";
-        foreach ($row as $cell) {
-            $output .= "<td>" . esc_html($cell) . "</td>";
+    $output = '';
+    // return '<pre>' . esc_html(print_r($all_csv_data, true)) . '</pre>'; // For debug proposes
+
+    foreach ($all_csv_data as $csv_data) {
+        // Start building the output
+        $output .= "<table style='width:100%;border-collapse:collapse;' border='1'>";
+        $is_header = true;
+
+        foreach ($csv_data as $row) {
+            if ($is_header) {
+                $output .= "<tr>";
+                foreach ($row as $cell) {
+                    $output .= "<th>" . esc_html($cell) . "</th>";
+                }
+                $output .= "</tr>";
+                $is_header = false;
+            } else {
+                $output .= "<tr>";
+                foreach ($row as $cell) {
+                    $output .= "<td>" . esc_html($cell) . "</td>";
+                }
+                $output .= "</tr>";
+            }
         }
-        $output .= "</tr>";
+
+        $output .= "</table>";
     }
-    $output .= "</table>";
 
     return $output;
 }
