@@ -1,3 +1,6 @@
+<?php 
+    include_once("./utils/base_url.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,6 @@
     <title>Document</title>
 </head>
 <body>
-    teste
+    <?php include_once('./templates/partials/header.php');?>
 </body>
 </html>

@@ -1,0 +1,49 @@
+header {
+    padding: 32px;
+    margin: 0px;
+    background-color: #C1C1C1;
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 64px 80% 64px;
+    justify-content: center;
+    align-content: center;
+}
+
+.title-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.blog-title {
+    margin: auto;
+    white-space: nowrap;
+    width: 0px;
+    border-right: 2px solid black;
+    animation: expand_title 2s ease-in-out forwards, bar_visible 1s ease-in-out infinite;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.title-img-wrapper img {
+    width: 64px;
+}
+ 
+@keyframes expand_title {
+    0% {
+        width: 0px;
+    }
+    100% {
+        width: 190px;
+    }
+
+}
+
+@keyframes bar_visible {
+    0% {
+        border-right: 2px solid black;
+    }
+
+    100% {
+        border: none;
+    }
+}
