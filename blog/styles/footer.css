@@ -1,0 +1,13 @@
+footer {
+    padding: 32px;
+    margin: 0px;
+    background-color: #C1C1C1;
+    grid-area: footer;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+footer > p {
+    margin: auto;
+}
