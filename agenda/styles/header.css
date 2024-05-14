@@ -4,4 +4,19 @@ header {
     text-align: center;
     padding: 32px;
     display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+header > img {
+    width: 200px;
+}
+
+header > h1 {
+    width: 1000px;
+}
+
+header > a {
+    width: 200px;
+    text-align: right;
 }
