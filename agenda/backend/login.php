@@ -31,7 +31,7 @@ if ($stmt->rowCount() > 0) {
     if (password_verify($user_password, $hashed_password)) {
         $access_token = generateToken();
 
-        $update_stmt = $conn->prepare('UPDATE users SET (access_token) VALUES (:token) WHERE id = :id');
+        $update_stmt = $conn->prepare('UPDATE users SET access_token = :token WHERE id = :id');
         $update_stmt->bindParam(':token', $access_token);
         $update_stmt->bindParam(':id', $user['id']);
         $update_stmt->execute();
