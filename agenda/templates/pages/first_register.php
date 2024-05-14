@@ -1,4 +1,7 @@
 <?php
+include_once ("../../utils/base_url.php");
+?>
+<?php
 
 $db_dsn = 'mysql:host=localhost;dbname=pesq_db';
 $db_username = 'root';
@@ -11,7 +14,7 @@ $stmt->execute();
 
 if ($stmt->rowCount() > 0):
     ?>
-    <?= 'Voce nao tem acesso a essa pagina.' ?>
+    <?php header('Location: ' . BASE_URL . 'templates/pages/login.php'); ?>
 <?php else: ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -19,32 +22,40 @@ if ($stmt->rowCount() > 0):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Registrar primeiro usuario</title>
+        <title>Primeiro registro</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="../../styles/first_register.css">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/first_register.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/footer.css' ?>">
     </head>
 
     <body>
-        <form method="POST" action="../../backend/register.php">
-            <div>
-                <label for="username">Usuario: </label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            <div>
-                <label for="email">Email: </label>
-                <input type="email" name="email" id="email">
-            </div>
-            <div>
-                <label for="password">Senha: </label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <div>
-                <label for="password2">Confirmar senha: </label>
-                <input type="password" name="password2" id="password2" required>
-            </div>
-            <input type="submit" value="Registrar Usuario">
-        </form>
+        <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
+
+        <div class="bodyform">
+            <form method="POST" action="<?= BASE_URL . 'backend/register.php' ?>">
+                <h1>Bem-vindo(a) !</h1>
+                <div>
+                    <label for="username">Usuario: </label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                <div>
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <div>
+                    <label for="password">Senha: </label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div>
+                    <label for="password2">Confirmar senha: </label>
+                    <input type="password" name="password2" id="password2" required>
+                </div>
+                <button type="submit">Registrar</button>
+            </form>
+        </div>
     </body>
 
     </html>

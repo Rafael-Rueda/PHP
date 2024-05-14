@@ -4,3 +4,13 @@
     padding: 0;
     font-family: sans-serif;
 }
+
+:root {
+    --primary-color: #67a84f;
+    --secondary-color: #1d3016;
+
+    --primary-hover: #a4dc8f;
+    --secondary-hover: #354c2c;
+
+    --text-color: #FFFFFF;
+}

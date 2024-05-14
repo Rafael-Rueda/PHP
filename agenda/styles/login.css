@@ -6,9 +6,9 @@ div.bodyform {
 }
 
 form {
-    background-color: #67a84f;
+    background-color: var(--primary-color);
     padding: 16px;
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
 
     display: grid;
@@ -27,7 +27,8 @@ form div:nth-of-type(2) {
 }
 
 form input[type=text], input[type=password] {
-    height: 28px;
+    width: 512px;
+    height: 32px;
     padding: 8px;
 }
 
@@ -35,14 +36,19 @@ form button[type=submit] {
     margin: auto;
     color: white;
     cursor: pointer;
-    background-color: #1d3016;
+    background-color: var(--secondary-color);
     outline: none;
     border: none;
-    width: 128px;
-    height: 32px;
+    width: 256px;
+    height: 64px ;
     padding: 16px;
 
     display: flex;
-    align-content: center;
+    align-items: center;
+    font-size: 32px;
     justify-content: center;
+}
+
+form button[type=submit]:hover {
+    background-color: var(--secondary-hover);
 }

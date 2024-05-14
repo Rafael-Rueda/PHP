@@ -1,5 +1,7 @@
 <?php 
 
+include_once('../utils/base_url.php');
+
 session_start();
 function generateToken($length = 32)
 {
@@ -40,12 +42,14 @@ if ($stmt->rowCount() > 0) {
 
         $_SESSION['access_token'] = $access_token;
 
-        header('Location: ../index.php');
+        header('Location: ' . BASE_URL . 'index.php');
     } else {
         echo "Senha incorreta.";
+        header('Location: ' . BASE_URL . 'templates/pages/login.php');
     }
 } else {
     echo "Usuário não encontrado.";
+    header('Location: ' . BASE_URL . 'templates/pages/login.php');
 }
 
 $conn = null;

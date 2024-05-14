@@ -1,5 +1,7 @@
 <?php
 
+include_once('../utils/base_url.php');
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 $password2 = $_POST['password2'];
@@ -22,5 +24,7 @@ if ($password == $password2) {
     $stmt->bindParam(':e', $email);
     $stmt->execute();
 
-    header('Location: ../templates/pages/login.php');
+    header('Location: ' . BASE_URL . 'templates/pages/login.php');
+} else {
+    header('Location: ' . BASE_URL . 'templates/pages/register.php');
 }

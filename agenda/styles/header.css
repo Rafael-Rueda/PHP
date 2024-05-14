@@ -1,22 +1,28 @@
 header {
-    background-color: #67a84f;
+    background-color: var(--primary-color);
     color: white;
     text-align: center;
     padding: 32px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 200px 70% 200px;
     align-items: center;
     gap: 32px;
+    justify-content: center;
 }
 
-header > img {
+header img {
     width: 200px;
 }
 
-header > h1 {
-    width: 1000px;
-}
-
-header > a {
-    width: 200px;
+header > div.links {
     text-align: right;
+    display: grid;
+}
+
+header a {
+    color: var(--text-color);
+}
+
+header > a:nth-of-type(1), header > a:nth-of-type(2) {
+    text-decoration: none;
 }

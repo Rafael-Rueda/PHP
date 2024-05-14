@@ -9,11 +9,11 @@
     <title>Financiamento para pesquisa</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="./styles/styles.css">
-    <link rel="stylesheet" href="./styles/header.css">
-    <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/footer.css' ?>">
 </head>
 <body>
-    <?php include_once('./templates/partials/header.php');?>
+    <?php include_once(__DIR__ . '/templates/partials/header.php');?>
 </body>
 </html>
