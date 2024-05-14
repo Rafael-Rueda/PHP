@@ -19,7 +19,10 @@ if ($stmt->rowCount() > 0):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Registrar primeiro usuario</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../styles/first_register.css">
     </head>
 
     <body>

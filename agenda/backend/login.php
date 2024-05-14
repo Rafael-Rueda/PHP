@@ -1,4 +1,6 @@
 <?php 
+
+session_start();
 function generateToken($length = 32)
 {
     // Gera uma string aleatória
@@ -35,6 +37,8 @@ if ($stmt->rowCount() > 0) {
         $update_stmt->bindParam(':token', $access_token);
         $update_stmt->bindParam(':id', $user['id']);
         $update_stmt->execute();
+
+        $_SESSION['access_token'] = $access_token;
 
         header('Location: ../index.php');
     } else {

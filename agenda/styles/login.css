@@ -1,0 +1,48 @@
+div.bodyform {
+    display: grid;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    background-color: #67a84f;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+
+    display: grid;
+}
+
+form label {
+    display: block;
+}
+
+form div {
+    margin: 16px;
+}
+
+form div:nth-of-type(2) {
+    margin-top: -8px;
+}
+
+form input[type=text], input[type=password] {
+    height: 28px;
+    padding: 8px;
+}
+
+form button[type=submit] {
+    margin: auto;
+    color: white;
+    cursor: pointer;
+    background-color: #1d3016;
+    outline: none;
+    border: none;
+    width: 128px;
+    height: 32px;
+    padding: 16px;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
