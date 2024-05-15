@@ -5,6 +5,10 @@
     font-family: sans-serif;
 }
 
+body {
+    background-color: #F1F1F1;
+}
+
 :root {
     --primary-color: #67a84f;
     --secondary-color: #1d3016;

@@ -1,0 +1,23 @@
+.question textarea {
+    resize: none;
+    min-height: 30px;
+    width: 50%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    line-height: 1.5;
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    padding-left: 8px;
+    box-sizing: border-box;
+    font-size: 20px;
+    height: 30px;
+}
+
+.question textarea:focus {
+    border-bottom: 2px solid var(--primary-hover);
+    outline: none;
+}
+
+.question {
+    position: relative;
+}
