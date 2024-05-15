@@ -17,5 +17,9 @@ CREATE TABLE IF NOT EXISTS users (
 -- Creates the table requests
 CREATE TABLE IF NOT EXISTS requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    
+    nome VARCHAR(255) NOT NULL,
+    teste TEXT NOT NULL,
+    teste2 TEXT NOT NULL,
+    teste3 TEXT NOT NULL,
+    data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
