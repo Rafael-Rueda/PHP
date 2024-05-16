@@ -22,7 +22,7 @@
 
 .question {
     width: 600px;
-    height: 150px;
+    height: 180px;
     display: grid;
     gap: 16px;
     border-radius: 16px;
@@ -53,10 +53,10 @@
     border-left: 2px solid var(--primary-color);
 }
 
-.request-form form{
+.request-form form {
     display: grid;
     gap: 64px;
-    grid-template-rows: repeat(auto-fit, minmax(150px, auto));
+    grid-template-rows: repeat(auto-fit, minmax(180px, calc(auto + 64px)));
 }
 
 .submit button {
@@ -83,6 +83,12 @@
 .submit {
     display: grid;
     justify-content: center;
+}
+
+.question label::after {
+    content: ' *';
+    color: red;
+    vertical-align: top;
 }
 
 @media screen and (max-width: 1250px) {
