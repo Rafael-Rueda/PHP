@@ -14,12 +14,37 @@ CREATE TABLE IF NOT EXISTS users (
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Creates the table requests
-CREATE TABLE IF NOT EXISTS requests (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    teste TEXT NOT NULL,
-    teste2 TEXT NOT NULL,
-    teste3 TEXT NOT NULL,
-    data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+-- Forms, Questions and Answers
+
+CREATE TABLE forms (
+    id INT PRIMARY KEY,
+    owner INT
+);
+
+CREATE TABLE questions (
+    id INT PRIMARY KEY,
+    fk_forms_id INT,
+    content TEXT,
+    type VARCHAR(255)
+);
+
+CREATE TABLE answers (
+    id INT PRIMARY KEY,
+    fk_questions_id INT,
+    content TEXT
+);
+
+ALTER TABLE forms ADD CONSTRAINT FK_forms_owner
+    FOREIGN KEY (owner)
+    REFERENCES users (id)
+    ON DELETE CASCADE;
+
+ALTER TABLE questions ADD CONSTRAINT FK_questions_2
+    FOREIGN KEY (fk_forms_id)
+    REFERENCES forms (id)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE answers ADD CONSTRAINT FK_answers_2
+    FOREIGN KEY (fk_questions_id)
+    REFERENCES questions (id)
+    ON DELETE CASCADE;
