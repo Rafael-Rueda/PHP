@@ -27,7 +27,8 @@ CREATE TABLE questions (
     id INT PRIMARY KEY,
     fk_forms_id INT,
     content TEXT,
-    type VARCHAR(255)
+    type VARCHAR(255),
+    required BOOLEAN
 );
 
 CREATE TABLE answers (

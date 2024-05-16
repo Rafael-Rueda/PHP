@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/forms.css' ?>">
 </head>
 <body>
-    <?php include_once(__DIR__ . '/templates/partials/header.php');?>
+    <?php include_once(BASE_PATH . 'templates/partials/header.php');?>
     <div class="request-form">
         <form method="POST" action="">
             <div class="question">
