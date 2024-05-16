@@ -27,25 +27,26 @@ if ($stmt1->rowCount() > 0):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area restrita</title>
+    <title>Criar formulario</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/create_form.css' ?>">
 </head>
 <body>
-    <a href="<?= BASE_URL . 'templates/pages/create_form.php' ?>">Criar novo formulario</a>
-    <?php 
-        $stmt2 = $conn->prepare('SELECT * FROM forms WHERE owner = :user');
-        $stmt2->bindParam(':user', $user);
-        $stmt2->execute();
-
-        $forms_from_user = $stmt2->fetchAll();
-
-        print_r($forms_from_user);
-    ?>
+    <div class="create-form">
+        <div class="create-img">
+            <img src="<?= BASE_URL . 'images/cabecalho.jpg' ?>" alt="header">
+        </div>
+        <form id="create-form" action="<?= BASE_URL . 'backend/create_form.php' ?>">
+            <div class="create-title create-field">
+                <input placeholder="Titulo do formulario" type="text" name="title" id="title">
+                <textarea class="long-field" placeholder="Descricao do formulario" type="text" name="description" id="description"></textarea>
+            </div>
+        </form>
+    </div>
+    <script src="<?= BASE_URL . 'scripts/expand_field.js' ?>"></script>
 </body>
 </html>
 
-<?php else: ?>
-    <?php header('Location: ' . BASE_URL . 'templates/pages/first_register.php'); ?>
 <?php endif; ?>

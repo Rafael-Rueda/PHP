@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE forms (
     id INT PRIMARY KEY,
+    name VARCHAR(255),
+    description TEXT,
     owner INT
 );
 

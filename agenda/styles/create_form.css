@@ -1,0 +1,90 @@
+.create-form {
+    box-sizing: border-box;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    display: grid;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+    margin: auto;
+    width: 50%;
+    grid-template-columns: 1fr;
+    background-color: white;
+    min-height: 600px;
+    border-left: 2px solid var(--primary-color);
+}
+
+.create-field {
+    background-color: var(--question-bg-color);
+    height: 180px;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    gap: 16px;
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.create-field input, .create-field textarea{
+    display: block;
+    resize: none;
+    min-height: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    line-height: 1.5;
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    padding-left: 8px;
+    box-sizing: border-box;
+    font-size: 20px;
+    height: 30px;
+    background-color: transparent;
+}
+.create-img {
+    height: auto;
+}
+.create-img img {
+    width: 90%;
+    display: block;
+    margin: auto;
+}
+
+.create-title input, .create-title textarea {
+    width: 500px;
+}
+
+.create-question textarea:focus, .create-question input:focus, .create-title input:focus, .create-title textarea:focus {
+    border-bottom: 2px solid var(--primary-hover);
+    outline: none;
+}
+
+@media screen and (max-width: 1250px) {
+    .create-field {
+        width: 500px;
+    }
+
+    .create-field input, .create-field textarea {
+        width: 100%;
+    }
+
+    .create-form {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .create-field {
+        width: 400px;
+    }
+
+    .create-field input, .create-field textarea {
+        width: 100%;
+    }
+
+    .create-form {
+        width: 100%;
+    }
+}
