@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+    function generateRandomCode() {
+        return Math.random().toString(36).slice(2, 10).toUpperCase();
+    }
+
+    let atualField = 0;
+    const addButton = document.querySelector('.add-field');
+
     const controls = document.querySelector('.controls');
-    const fields = document.querySelectorAll('.create-field');
+    let old_fields = document.querySelectorAll('.create-field');
     const create_form = document.querySelector('.create-form');
 
-    function fieldClicked(field) {
+    // Functions that create/remove event listeners for fields
+    function fieldClicked(field, index) {
 
         // Set controls to the selected field
         let parentRect = create_form.getBoundingClientRect();
@@ -12,25 +20,86 @@ document.addEventListener("DOMContentLoaded", function () {
         let scrollPos = childRect.top - parentRect.top + controls.scrollTop;
         controls.style.top = scrollPos + 'px';
 
-        // Turns on the edit field mode
-        
+        atualField = index;
+
     }
 
-    function checkTitleField(field, index) {
-        const removeField = document.querySelector('.remove-field')
-        if (index == 0) {
-            removeField.style.display = 'none';
-        } else {
-            removeField.style.display = 'block';
-        }
-    }
+    fieldClicked(old_fields[0], 0);
 
-    fieldClicked(fields[0]);
+    const fieldClickListeners = [];
 
-    Array.from(fields).forEach((field, index) => {
-        field.addEventListener('click', () => {
-            fieldClicked(field); 
-            checkTitleField(field, index);
+    function createFieldClickFunction(field, index) {
+        return function () { fieldClicked(field, index) };
+    };
+
+    function removeFieldClickListeners() {
+        const fields = document.querySelectorAll('.create-field');
+        Array.from(fields).forEach((field, index) => {
+            const listener = fieldClickListeners[index];
+            if (listener) {
+                field.removeEventListener('click', listener);
+            }
         });
+    }
+
+    function createFieldClickListeners() {
+        const fields = document.querySelectorAll('.create-field');
+        Array.from(fields).forEach((field, index) => {
+            const listener = createFieldClickFunction(field, index);
+            fieldClickListeners[index] = listener;
+            field.addEventListener('click', listener);
+        });
+        old_fields = fields;
+    }
+
+    createFieldClickListeners();
+
+    // Controls event listeners
+    addButton.addEventListener('click', () => {
+        addQuestion();
     });
+
+    function addQuestion() {
+        const randomCode = generateRandomCode();
+        const questionDiv = document.createElement('div');
+        questionDiv.id = randomCode;
+        questionDiv.className = 'create-question create-field';
+
+        const input = document.createElement('textarea');
+        input.placeholder = 'Sua pergunta';
+        input.id = `${randomCode}-input`;
+        input.className = 'long-field';
+
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'question-controls';
+
+        const select = document.createElement('select');
+        select.id = `${randomCode}-select`;
+        const options = [
+            { value: 'short-field', text: 'Campo de texto curto' },
+            { value: 'long-field', text: 'Campo de texto longo' },
+            { value: 'radio-field', text: 'Campo de escolha' },
+            { value: 'select-field', text: 'Campo de multipla escolha' }
+        ];
+        options.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            select.appendChild(optionElement);
+        });
+
+        const button = document.createElement('button');
+        button.textContent = '(U)';
+
+        // Mount the structure
+        controlsDiv.appendChild(select);
+        controlsDiv.appendChild(button);
+        questionDiv.appendChild(input);
+        questionDiv.appendChild(controlsDiv);
+
+        document.querySelector('.form').insertBefore(questionDiv, old_fields[atualField + 1]);
+
+        removeFieldClickListeners();
+        createFieldClickListeners();
+    }
 });

@@ -86,7 +86,7 @@
 .controls {
     position: absolute;
     top: 0px;
-    right: 64px;
+    right: -10%;
 }
 
 .button-after {
@@ -104,31 +104,10 @@
 }
 
 .add-field button:hover ~ .button-after {
-    right: -128px;
+    right: -144px;
     opacity: 1;
     visibility: visible;
 }
-
-.remove-field button {
-    position: absolute;
-    font-size: 32px;
-    background-color: #C1C1C1;
-    border: none;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 5;
-    right: 0;
-    top: 64px;
-}
-
-.remove-field button:hover ~ .button-after {
-    right: -128px;
-    opacity: 1;
-    visibility: visible;
-}
-
 
 /* Media queries */
 
@@ -149,6 +128,10 @@
 @media screen and (max-width: 700px) {
     .create-field {
         width: 400px;
+    }
+
+    .controls {
+        right: 10%;
     }
 
     .create-field input, .create-field textarea {

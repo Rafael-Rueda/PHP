@@ -48,10 +48,17 @@ if ($stmt1->rowCount() > 0):
                     <textarea class="long-field" placeholder="Descricao do formulario" type="text" name="description"
                         id="description"></textarea>
                 </div>
-                <div class="create-question create-field">
-                    <label for="p1">Pergunta 1</label>
-                    <textarea class="long-field" placeholder="Sua resposta" type="text" name="HD8393RD"
-                        id="p1"></textarea>
+                <div id="HD8393RD" class="create-question create-field">
+                    <textarea class="long-field" placeholder="Sua pergunta" id="HD8393RD-input"></textarea>
+                    <div class="question-controls">
+                        <select id="HD8393RD-select">
+                            <option value="short-field">Campo de texto curto</option>
+                            <option value="long-field">Campo de texto longo</option>
+                            <option value="radio-field">Campo de escolha</option>
+                            <option value="select-field">Campo de multipla escolha</option>
+                        </select>
+                        <button>(U)</button>
+                    </div>
                 </div>
             </div>
             <form id="create-form" method="POST" action="<?= BASE_URL . 'backend/create_form.php' ?>">
@@ -60,7 +67,6 @@ if ($stmt1->rowCount() > 0):
             </form>
             <?php include_once (BASE_PATH . 'templates/partials/controls.php'); ?>
         </div>
-        <script src="<?= BASE_URL . 'scripts/expand_field.js' ?>"></script>
         <script src="<?= BASE_URL . 'scripts/controls.js' ?>"></script>
     </body>
 
