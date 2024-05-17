@@ -34,6 +34,9 @@ if ($stmt1->rowCount() > 0):
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/create_form.css' ?>">
+
+        <!-- script -->
+        <script src="https://kit.fontawesome.com/b559fbf78d.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -48,7 +51,7 @@ if ($stmt1->rowCount() > 0):
                     <textarea class="long-field" placeholder="Descricao do formulario" type="text" name="description"
                         id="description"></textarea>
                 </div>
-                <div id="HD8393RD" class="create-question create-field">
+                <!-- <div id="HD8393RD" class="create-question create-field">
                     <textarea class="long-field" placeholder="Sua pergunta" id="HD8393RD-input"></textarea>
                     <div class="question-controls">
                         <select id="HD8393RD-select">
@@ -57,17 +60,21 @@ if ($stmt1->rowCount() > 0):
                             <option value="radio-field">Campo de escolha</option>
                             <option value="select-field">Campo de multipla escolha</option>
                         </select>
-                        <button>(U)</button>
+                        <div class="required">
+                            <label for="required">Obrigatorio</label>
+                            <input type="checkbox" name="required" id="HD8393RD-required">
+                        </div>
+                        <button><i class="fa-solid fa-trash"></i></button>
                     </div>
-                </div>
+                </div> -->
             </div>
             <form id="create-form" method="POST" action="<?= BASE_URL . 'backend/create_form.php' ?>">
-                <input type="hidden" name="HD8393RD" value="Pergunta 1;long-field">
+                <!-- <input type="hidden" name="HD8393RD" value="Pergunta 1;long-field;true"> -->
                 <button type="submit">Criar formulario</button>
             </form>
             <?php include_once (BASE_PATH . 'templates/partials/controls.php'); ?>
         </div>
-        <script src="<?= BASE_URL . 'scripts/controls.js' ?>"></script>
+        <script type="module" src="<?= BASE_URL . 'scripts/controls.js' ?>"></script>
     </body>
 
     </html>

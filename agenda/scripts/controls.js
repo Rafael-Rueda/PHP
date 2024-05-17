@@ -1,7 +1,20 @@
+// IMPORTANT: analyze all the files to have a correct overview of the code
+import { typeFunc } from './question_types.js';
+import { nameFunc } from './question_name.js';
+import { requiredFunc } from './question_required.js';
+
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Utils
     function generateRandomCode() {
         return Math.random().toString(36).slice(2, 10).toUpperCase();
-    }
+    };
+
+    function generateSecureRandomCode(length) {
+        const array = new Uint8Array(length / 2);
+        window.crypto.getRandomValues(array);
+        return Array.from(array, byte => ('0' + byte.toString(16)).slice(-2)).join('').toUpperCase();
+    };
 
     let atualField = 0;
     const addButton = document.querySelector('.add-field');
@@ -10,26 +23,19 @@ document.addEventListener("DOMContentLoaded", function () {
     let old_fields = document.querySelectorAll('.create-field');
     const create_form = document.querySelector('.create-form');
 
-    // Functions that create/remove event listeners for fields
     function fieldClicked(field, index) {
-
-        // Set controls to the selected field
         let parentRect = create_form.getBoundingClientRect();
         let childRect = field.getBoundingClientRect();
 
-        let scrollPos = childRect.top - parentRect.top + controls.scrollTop;
+        let scrollPos = childRect.top - parentRect.top + create_form.scrollTop;
         controls.style.top = scrollPos + 'px';
+        controls.style.display = 'block';
 
         atualField = index;
-
-    }
-
-    fieldClicked(old_fields[0], 0);
-
-    const fieldClickListeners = [];
+    };
 
     function createFieldClickFunction(field, index) {
-        return function () { fieldClicked(field, index) };
+        return function () { fieldClicked(field, index); };
     };
 
     function removeFieldClickListeners() {
@@ -40,9 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 field.removeEventListener('click', listener);
             }
         });
-    }
+    };
 
     function createFieldClickListeners() {
+        // Makes the fields clickable for the .controls add button move
         const fields = document.querySelectorAll('.create-field');
         Array.from(fields).forEach((field, index) => {
             const listener = createFieldClickFunction(field, index);
@@ -50,17 +57,62 @@ document.addEventListener("DOMContentLoaded", function () {
             field.addEventListener('click', listener);
         });
         old_fields = fields;
-    }
 
+        // Makes long fields expansible
+        const longFields = document.querySelectorAll('.long-field');
+        function expandLongField() {
+            this.style.height = '30px';
+            this.style.height = (this.scrollHeight) + 'px';
+            this.parentNode.style.height = 150 + this.scrollHeight + 'px';
+        }
+        Array.from(longFields).forEach(longField => {
+            longField.removeEventListener('input', expandLongField);
+            longField.addEventListener('input', expandLongField);
+        });
+    };
+
+    function createFieldChangeListeners() {
+        // Adds the event listener to watch the change of the type of the question
+        const questions = document.querySelectorAll('.create-question');
+        Array.from(questions).forEach((field, index) => {
+            const selectElement = field.querySelector('select');
+            const id = selectElement.id;
+            selectElement.addEventListener('change', () => {
+                typeFunc(id);
+            })
+        });
+
+        // Adds the event listener to watch the change of the question text input
+        Array.from(questions).forEach((field, index) => {
+            const questionNameElement = field.querySelector('textarea');
+            const id = questionNameElement.id;
+
+            questionNameElement.addEventListener('change', () => {
+                nameFunc(id);
+            })
+        });
+
+        // Adds the event listener to watch the change of the required checkbox
+        Array.from(questions).forEach((field, index) => {
+            const questionCheckboxElement = field.querySelector('input[type=checkbox]');
+            const id = questionCheckboxElement.id;
+
+            questionCheckboxElement.addEventListener('change', () => {
+                requiredFunc(id);
+            })
+        });
+    };
+
+    const fieldClickListeners = [];
     createFieldClickListeners();
 
-    // Controls event listeners
     addButton.addEventListener('click', () => {
         addQuestion();
     });
 
     function addQuestion() {
-        const randomCode = generateRandomCode();
+        // Visual output
+        const randomCode = generateSecureRandomCode(32);
         const questionDiv = document.createElement('div');
         questionDiv.id = randomCode;
         questionDiv.className = 'create-question create-field';
@@ -88,18 +140,82 @@ document.addEventListener("DOMContentLoaded", function () {
             select.appendChild(optionElement);
         });
 
-        const button = document.createElement('button');
-        button.textContent = '(U)';
+        const requiredDiv = document.createElement('div');
+        requiredDiv.className = 'required';
 
-        // Mount the structure
+        const checkboxLabel = document.createElement('label');
+        checkboxLabel.setAttribute('for', 'required');
+        checkboxLabel.textContent = 'Obrigatorio';
+        requiredDiv.appendChild(checkboxLabel);
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'required';
+        checkbox.id = `${randomCode}-required`;
+        requiredDiv.appendChild(checkbox);
+
+        const button = document.createElement('button');
+        const buttonIcon = document.createElement('i');
+        buttonIcon.className = 'fa-solid fa-trash';
+        button.appendChild(buttonIcon);
+
         controlsDiv.appendChild(select);
+        controlsDiv.appendChild(requiredDiv);
         controlsDiv.appendChild(button);
         questionDiv.appendChild(input);
         questionDiv.appendChild(controlsDiv);
 
         document.querySelector('.form').insertBefore(questionDiv, old_fields[atualField + 1]);
 
+        // Configure the event listeners for the visual output
         removeFieldClickListeners();
         createFieldClickListeners();
+        createFieldChangeListeners();
+
+        document.getElementById(randomCode).querySelector('.question-controls button').addEventListener('click', () => {
+            removeQuestion(randomCode);
+        });
+
+        fieldClicked(document.getElementById(randomCode), atualField + 1);
+
+        // For backend hidden inputs with values
+        const questionHiddenInput = document.createElement('input');
+        questionHiddenInput.type = 'hidden';
+        questionHiddenInput.name = randomCode;
+        questionHiddenInput.value = `${input.value};${select.value};${checkbox.checked}`;
+
+        const createForm = document.getElementById('create-form');
+        createForm.appendChild(questionHiddenInput);
+    }
+
+    function removeQuestion(id) {
+        const questionElement = document.getElementById(id);
+        if (questionElement) {
+            // Removes the hidden input for the backend
+            const hiddenInput = document.querySelector(`input[name="${id}"]`);
+            if (hiddenInput) {
+                hiddenInput.remove();
+            }
+            // Removes the question output element
+            removeFieldClickListeners();
+
+            questionElement.remove();
+            old_fields = document.querySelectorAll('.create-field');
+
+            createFieldClickListeners();
+
+            if (old_fields.length > 0) {
+                atualField = Math.max(atualField - 1, 0);
+                fieldClicked(old_fields[atualField], atualField);
+            } else {
+                console.log('Hiding controls');
+                controls.style.display = 'none';
+            }
+        }
+    }
+
+    // Initial selection of the first field
+    if (old_fields.length > 0) {
+        fieldClicked(old_fields[0], 0);
     }
 });
