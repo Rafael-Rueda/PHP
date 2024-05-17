@@ -42,7 +42,7 @@ if ($stmt1->rowCount() > 0):
             <div class="create-img">
                 <img src="<?= BASE_URL . 'images/cabecalho.jpg' ?>" alt="header">
             </div>
-            <form id="create-form" action="<?= BASE_URL . 'backend/create_form.php' ?>">
+            <div class="form">
                 <div class="create-title create-field">
                     <input placeholder="Titulo do formulario" type="text" name="title" id="title">
                     <textarea class="long-field" placeholder="Descricao do formulario" type="text" name="description"
@@ -50,18 +50,13 @@ if ($stmt1->rowCount() > 0):
                 </div>
                 <div class="create-question create-field">
                     <label for="p1">Pergunta 1</label>
-                    <textarea class="long-field" placeholder="Sua resposta" type="text" name="description"
+                    <textarea class="long-field" placeholder="Sua resposta" type="text" name="HD8393RD"
                         id="p1"></textarea>
                 </div>
-                <div class="create-question create-field">
-                    <label for="p2">Pergunta 2</label>
-                    <textarea class="long-field" placeholder="Sua resposta" type="text" name="description"
-                        id="p2"></textarea>
-                </div>
-                <div class="create-question create-field">
-                    <textarea class="long-field" placeholder="Sua resposta" type="text" name="description"
-                        id="p3"></textarea>
-                </div>
+            </div>
+            <form id="create-form" method="POST" action="<?= BASE_URL . 'backend/create_form.php' ?>">
+                <input type="hidden" name="HD8393RD" value="Pergunta 1;long-field">
+                <button type="submit">Criar formulario</button>
             </form>
             <?php include_once (BASE_PATH . 'templates/partials/controls.php'); ?>
         </div>

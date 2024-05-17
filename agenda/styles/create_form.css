@@ -17,7 +17,7 @@
     gap: 64px;
 }
 
-.create-form form {
+.create-form div.form {
     display: grid;
     gap: 64px;
     grid-template-rows: repeat(auto-fit, minmax(180px, calc(auto + 64px)));
@@ -68,15 +68,69 @@
     outline: none;
 }
 
-.add-field, .remove-field {
-    background-color: var(--question-bg-color);
+/* Controls */
+
+.add-field button {
+    position: absolute;
+    font-size: 32px;
+    background-color: #C1C1C1;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+    right: 0;
 }
 
 .controls {
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 64px;
 }
+
+.button-after {
+    position: absolute;
+    top: 16px;
+    background-color: #C1C1C1;
+    right: 0px;
+    transition: all .2s;
+    text-wrap: nowrap;
+    padding: 4px;
+    border-radius: 8px;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+.add-field button:hover ~ .button-after {
+    right: -128px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.remove-field button {
+    position: absolute;
+    font-size: 32px;
+    background-color: #C1C1C1;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+    right: 0;
+    top: 64px;
+}
+
+.remove-field button:hover ~ .button-after {
+    right: -128px;
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Media queries */
 
 @media screen and (max-width: 1250px) {
     .create-field {
