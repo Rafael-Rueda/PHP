@@ -78,5 +78,6 @@ if ($stmt1->rowCount() > 0):
     </body>
 
     </html>
-
+<?php else: ?>
+    <?php header('Location: ' . BASE_URL . 'templates/pages/first_register.php'); ?>
 <?php endif; ?>

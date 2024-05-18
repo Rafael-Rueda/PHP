@@ -25,7 +25,7 @@
 
 .create-field {
     background-color: var(--question-bg-color);
-    height: 180px;
+    min-height: 180px;
     display: grid;
     justify-content: center;
     justify-items: center;

@@ -1,3 +1,33 @@
+import { createElement } from '../utils/utils.js';
+
+function updateHiddenInput(questionId, partIndex, newValue) {
+    const hiddenInput = document.querySelector(`input[name="${questionId}"]`);
+    const hiddenInputOldValue = hiddenInput.value;
+
+    // Split the old value by ';' not preceded by '\' to get an array of parts
+    const parts = hiddenInputOldValue.split(/(?<!\\);/);
+
+    // Update the specified part of the array
+    if (!(partIndex in parts)) {
+        parts.push(newValue);
+    } else {
+        parts[partIndex] = newValue;
+    }
+
+    // Join the array back into a string using ';'
+    const updatedValue = parts.join(';');
+
+    // Update the value of the hidden input
+    hiddenInput.value = updatedValue;
+}
+
+function updateAllOptions(id, contentDiv) {
+    const allOptions = Array.from(contentDiv.querySelectorAll(`.optionInput-${id}`))
+        .map(opt => opt.value.replace(/;/g, '\\;').replace(/-/g, '\\-'))
+        .join('-');
+    updateHiddenInput(id, 3, allOptions);
+}
+
 function shortFieldFunc(id) {
 
 }
@@ -7,30 +37,32 @@ function longFieldFunc(id) {
 }
 
 function radioFieldFunc(id) {
-    const parts = hiddenInputOldValue.split(/(?<!\\);/);
+
 }
 
 function selectFieldFunc(id) {
 
-    
-    const questionSelectType = document.getElementById(`${id}-select`);
-    const hiddenInput = document.querySelector(`input[name="${id}"]`);
-    const hiddenInputOldValue = hiddenInput.value;
-    
-    // Split the old value by ';' not preceded by '\' to get an array of parts
-    const parts = hiddenInputOldValue.split(/(?<!\\);/);
+    // Output
+    const questionDiv = document.getElementById(id);
+    const addButton = createElement('button', {}, document.createTextNode('Adicionar opção'));
+    addButton.addEventListener('click', () => {
+        const optionInput = createElement('input', { type: 'text', placeholder: 'Opção', class: `optionInput-${id}` });
+        const button = createElement('button', {}, createElement('i', {class: 'fa-solid fa-trash'}));
+        const optionDiv = createElement('div', {}, optionInput, button);
+        questionDiv.appendChild(optionDiv);
 
-    function pushFourthValue() {
-        // Adds a fourth value to the hidden input csv values
-        parts.push(``);
-    };
+        optionInput.addEventListener('input', () => {
+            updateAllOptions(id, questionDiv);
+        });
+        
+        button.addEventListener('click', () => {
+            optionDiv.remove();
+            updateAllOptions(id, questionDiv);
+        });
+    });
+    questionDiv.appendChild(addButton);
 
 
-    // Join the array back into a string using ';'
-    const newValue = parts.join(';');
-
-    // Update the value of the hidden input
-    hiddenInput.value = newValue;
 }
 
 export function typeFunc(outputId) {

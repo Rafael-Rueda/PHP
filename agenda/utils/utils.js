@@ -36,3 +36,14 @@ Math.easeInOutQuad = function (t, b, c, d) {
     t--;
     return -c / 2 * (t * (t - 2) - 1) + b;
 };
+
+export function createElement(tag, attributes, ...children) {
+    const element = document.createElement(tag);
+    for (const key in attributes) {
+        element.setAttribute(key, attributes[key]);
+    }
+    for (const child of children) {
+        element.appendChild(child);
+    }
+    return element;
+}

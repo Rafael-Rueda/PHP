@@ -50,9 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Makes long fields expansible
         const longFields = document.querySelectorAll('.long-field');
         function expandLongField() {
-            this.style.height = '30px';
-            this.style.height = (this.scrollHeight) + 'px';
-            this.parentNode.style.height = 150 + this.scrollHeight + 'px';
+            this.style.minHeight = '30px';
+            this.style.minHeight = (this.scrollHeight) + 'px';
+            this.parentNode.style.minHeight = 150 + this.scrollHeight + 'px';
         }
         Array.from(longFields).forEach(longField => {
             longField.removeEventListener('input', expandLongField);
