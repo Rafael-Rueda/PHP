@@ -7,11 +7,30 @@ function longFieldFunc(id) {
 }
 
 function radioFieldFunc(id) {
-
+    const parts = hiddenInputOldValue.split(/(?<!\\);/);
 }
 
 function selectFieldFunc(id) {
 
+    
+    const questionSelectType = document.getElementById(`${id}-select`);
+    const hiddenInput = document.querySelector(`input[name="${id}"]`);
+    const hiddenInputOldValue = hiddenInput.value;
+    
+    // Split the old value by ';' not preceded by '\' to get an array of parts
+    const parts = hiddenInputOldValue.split(/(?<!\\);/);
+
+    function pushFourthValue() {
+        // Adds a fourth value to the hidden input csv values
+        parts.push(``);
+    };
+
+
+    // Join the array back into a string using ';'
+    const newValue = parts.join(';');
+
+    // Update the value of the hidden input
+    hiddenInput.value = newValue;
 }
 
 export function typeFunc(outputId) {
