@@ -66,31 +66,45 @@ document.addEventListener("DOMContentLoaded", function () {
         Array.from(questions).forEach((field, index) => {
             const selectElement = field.querySelector('select');
             const id = selectElement.id;
-            selectElement.addEventListener('change', () => {
+    
+            // Remove existing event listener to prevent duplicate
+            selectElement.removeEventListener('change', handleChangeListener);
+            selectElement.addEventListener('change', handleChangeListener);
+    
+            function handleChangeListener() {
                 typeFunc(id);
-            })
+            }
         });
-
+    
         // Adds the event listener to watch the change of the question text input
         Array.from(questions).forEach((field, index) => {
             const questionNameElement = field.querySelector('textarea');
             const id = questionNameElement.id;
-
-            questionNameElement.addEventListener('change', () => {
+    
+            // Remove existing event listener to prevent duplicate
+            questionNameElement.removeEventListener('change', handleNameChangeListener);
+            questionNameElement.addEventListener('change', handleNameChangeListener);
+    
+            function handleNameChangeListener() {
                 nameFunc(id);
-            })
+            }
         });
-
+    
         // Adds the event listener to watch the change of the required checkbox
         Array.from(questions).forEach((field, index) => {
             const questionCheckboxElement = field.querySelector('input[type=checkbox]');
             const id = questionCheckboxElement.id;
-
-            questionCheckboxElement.addEventListener('change', () => {
+    
+            // Remove existing event listener to prevent duplicate
+            questionCheckboxElement.removeEventListener('change', handleCheckboxChangeListener);
+            questionCheckboxElement.addEventListener('change', handleCheckboxChangeListener);
+    
+            function handleCheckboxChangeListener() {
                 requiredFunc(id);
-            })
+            }
         });
-    };
+    }
+    
 
     const fieldClickListeners = [];
     createFieldClickListeners();

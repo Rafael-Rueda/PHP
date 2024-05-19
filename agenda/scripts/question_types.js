@@ -28,6 +28,17 @@ function updateAllOptions(id, contentDiv) {
     updateHiddenInput(id, 3, allOptions);
 }
 
+function clearQuestionContent(questionId) {
+    const questionDiv = document.getElementById(questionId);
+    let contentDiv = questionDiv.querySelector('.question-content');
+    if (contentDiv) {
+        contentDiv.remove();
+    }
+    contentDiv = createElement('div', { class: 'question-content' });
+    questionDiv.appendChild(contentDiv);
+    return contentDiv;
+}
+
 function shortFieldFunc(id) {
 
 }
@@ -41,15 +52,16 @@ function radioFieldFunc(id) {
 }
 
 function selectFieldFunc(id) {
-
     // Output
+    clearQuestionContent(id);
     const questionDiv = document.getElementById(id);
+    const contentDiv = questionDiv.querySelector(`.question-content`);
     const addButton = createElement('button', {}, document.createTextNode('Adicionar opção'));
     addButton.addEventListener('click', () => {
         const optionInput = createElement('input', { type: 'text', placeholder: 'Opção', class: `optionInput-${id}` });
         const button = createElement('button', {}, createElement('i', {class: 'fa-solid fa-trash'}));
         const optionDiv = createElement('div', {}, optionInput, button);
-        questionDiv.appendChild(optionDiv);
+        contentDiv.insertBefore(optionDiv, addButton);
 
         optionInput.addEventListener('input', () => {
             updateAllOptions(id, questionDiv);
@@ -59,8 +71,9 @@ function selectFieldFunc(id) {
             optionDiv.remove();
             updateAllOptions(id, questionDiv);
         });
+        updateAllOptions(id, questionDiv);
     });
-    questionDiv.appendChild(addButton);
+    contentDiv.appendChild(addButton);
 
 
 }

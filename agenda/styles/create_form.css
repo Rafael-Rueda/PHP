@@ -109,6 +109,83 @@
     visibility: visible;
 }
 
+.question-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+}
+
+.question-controls select {
+    width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+    height: 32px;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid var(--primary-color);
+}
+
+.required {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 16px;
+}
+
+.required input {
+    width: 16px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.question-controls button {
+    grid-column: span 2;
+    grid-row: 2;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px; 
+    right: 16px;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.question-controls button:hover {
+    border: 1px solid red;
+}
+
+.question-controls button:hover i {
+    color: red;
+}
+
+.create-question {
+    position: relative;
+}
+
+.question-content {
+    display: grid;
+    gap: 8px;
+}
+
+.question-content div{
+    display: flex;
+}
+
+.question-content button {
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+}
+
+.question-content button:hover {
+    border: 1px solid var(--secondary-color);
+}
+
 /* Media queries */
 
 @media screen and (max-width: 1250px) {
@@ -122,6 +199,10 @@
 
     .create-form {
         width: 80%;
+    }
+
+    .required input {
+        width: 16px;
     }
 }
 
@@ -140,5 +221,9 @@
 
     .create-form {
         width: 100%;
+    }
+
+    .required input {
+        width: 16px;
     }
 }
