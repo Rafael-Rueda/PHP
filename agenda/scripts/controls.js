@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const id = questionNameElement.id;
     
             // Remove existing event listener to prevent duplicate
-            questionNameElement.removeEventListener('change', handleNameChangeListener);
-            questionNameElement.addEventListener('change', handleNameChangeListener);
+            questionNameElement.removeEventListener('input', handleNameChangeListener);
+            questionNameElement.addEventListener('input', handleNameChangeListener);
     
             function handleNameChangeListener() {
                 nameFunc(id);

@@ -14,6 +14,10 @@ function updateHiddenInput(questionId, partIndex, newValue) {
         parts[partIndex] = newValue;
     }
 
+    if (!newValue) {
+        parts.pop();
+    }
+
     // Join the array back into a string using ';'
     const updatedValue = parts.join(';');
 
@@ -40,33 +44,60 @@ function clearQuestionContent(questionId) {
 }
 
 function shortFieldFunc(id) {
-
+    // Output
+    clearQuestionContent(id);
+    updateHiddenInput(id, 3, '');
 }
 
 function longFieldFunc(id) {
-
+    // Output
+    clearQuestionContent(id);
+    updateHiddenInput(id, 3, '');
 }
 
 function radioFieldFunc(id) {
-
-}
-
-function selectFieldFunc(id) {
     // Output
     clearQuestionContent(id);
+    updateHiddenInput(id, 3, '');
     const questionDiv = document.getElementById(id);
     const contentDiv = questionDiv.querySelector(`.question-content`);
     const addButton = createElement('button', {}, document.createTextNode('Adicionar opção'));
     addButton.addEventListener('click', () => {
         const optionInput = createElement('input', { type: 'text', placeholder: 'Opção', class: `optionInput-${id}` });
-        const button = createElement('button', {}, createElement('i', {class: 'fa-solid fa-trash'}));
+        const button = createElement('button', {}, createElement('i', { class: 'fa-solid fa-trash' }));
         const optionDiv = createElement('div', {}, optionInput, button);
         contentDiv.insertBefore(optionDiv, addButton);
 
         optionInput.addEventListener('input', () => {
             updateAllOptions(id, questionDiv);
         });
-        
+
+        button.addEventListener('click', () => {
+            optionDiv.remove();
+            updateAllOptions(id, questionDiv);
+        });
+        updateAllOptions(id, questionDiv);
+    });
+    contentDiv.appendChild(addButton);
+}
+
+function selectFieldFunc(id) {
+    // Output
+    clearQuestionContent(id);
+    updateHiddenInput(id, 3, '');
+    const questionDiv = document.getElementById(id);
+    const contentDiv = questionDiv.querySelector(`.question-content`);
+    const addButton = createElement('button', {}, document.createTextNode('Adicionar opção'));
+    addButton.addEventListener('click', () => {
+        const optionInput = createElement('input', { type: 'text', placeholder: 'Opção', class: `optionInput-${id}` });
+        const button = createElement('button', {}, createElement('i', { class: 'fa-solid fa-trash' }));
+        const optionDiv = createElement('div', {}, optionInput, button);
+        contentDiv.insertBefore(optionDiv, addButton);
+
+        optionInput.addEventListener('input', () => {
+            updateAllOptions(id, questionDiv);
+        });
+
         button.addEventListener('click', () => {
             optionDiv.remove();
             updateAllOptions(id, questionDiv);
