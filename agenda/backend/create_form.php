@@ -16,8 +16,8 @@ $stmt1 = $conn->prepare('SELECT * FROM users WHERE access_token = :access_token'
 $stmt1->bindParam(':access_token', $access_token);
 $stmt1->execute();
 
-$user = $stmt1->fetch();
+$user = $stmt1->fetch(PDO::FETCH_ASSOC);
 
 if ($stmt1->rowCount() > 0) {
-    
+    print_r($user);
 }
