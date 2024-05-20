@@ -105,8 +105,6 @@ function selectFieldFunc(id) {
         updateAllOptions(id, questionDiv);
     });
     contentDiv.appendChild(addButton);
-
-
 }
 
 export function typeFunc(outputId) {

@@ -66,45 +66,84 @@ document.addEventListener("DOMContentLoaded", function () {
         Array.from(questions).forEach((field, index) => {
             const selectElement = field.querySelector('select');
             const id = selectElement.id;
-    
+
             // Remove existing event listener to prevent duplicate
             selectElement.removeEventListener('change', handleChangeListener);
             selectElement.addEventListener('change', handleChangeListener);
-    
+
             function handleChangeListener() {
                 typeFunc(id);
             }
         });
-    
+
         // Adds the event listener to watch the change of the question text input
         Array.from(questions).forEach((field, index) => {
             const questionNameElement = field.querySelector('textarea');
             const id = questionNameElement.id;
-    
+
             // Remove existing event listener to prevent duplicate
             questionNameElement.removeEventListener('input', handleNameChangeListener);
             questionNameElement.addEventListener('input', handleNameChangeListener);
-    
+
             function handleNameChangeListener() {
                 nameFunc(id);
             }
         });
-    
+
         // Adds the event listener to watch the change of the required checkbox
         Array.from(questions).forEach((field, index) => {
             const questionCheckboxElement = field.querySelector('input[type=checkbox]');
             const id = questionCheckboxElement.id;
-    
+
             // Remove existing event listener to prevent duplicate
             questionCheckboxElement.removeEventListener('change', handleCheckboxChangeListener);
             questionCheckboxElement.addEventListener('change', handleCheckboxChangeListener);
-    
+
             function handleCheckboxChangeListener() {
                 requiredFunc(id);
             }
         });
     }
-    
+
+    function createTitleChangeListeners() {
+        const titleField = document.querySelector('.create-title');
+
+        const createForm = document.getElementById('create-form');
+        let hiddenInput = createForm.querySelector('input[name=new-form]');
+
+        if (!hiddenInput) {
+            const questionHiddenInput = document.createElement('input');
+            questionHiddenInput.type = 'hidden';
+            questionHiddenInput.name = 'new-form';
+            questionHiddenInput.value = `${titleField.querySelector('#title').value};${titleField.querySelector('#description').value}`;
+
+            createForm.appendChild(questionHiddenInput);
+        }
+
+        hiddenInput = createForm.querySelector('input[name=new-form]');
+
+        function updateTitleHiddenInput(title, hiddenInput) {
+            // For backend hidden inputs with values
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'new-form';
+            hiddenInput.value = `${title};${titleField.querySelector('#description').value}`;
+        }
+        function updateDescriptionHiddenInput(description, hiddenInput) {
+            // For backend hidden inputs with values
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'new-form';
+            hiddenInput.value = `${titleField.querySelector('#title').value};${description}`;
+        }
+
+        titleField.querySelector('#title').addEventListener('input', (e) => {
+            updateTitleHiddenInput(e.target.value, hiddenInput);
+        });
+        titleField.querySelector('#description').addEventListener('input', (e) => {
+            updateDescriptionHiddenInput(e.target.value, hiddenInput);
+        });
+    }
+
+    createTitleChangeListeners();
 
     const fieldClickListeners = [];
     createFieldClickListeners();
