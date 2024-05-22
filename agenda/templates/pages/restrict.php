@@ -43,7 +43,7 @@ if ($stmt1->rowCount() > 0):
         $stmt2->bindParam(':user_id', $user['id']);
         $stmt2->execute();
 
-        $forms_from_user = $stmt2->fetchAll();
+        $forms_from_user = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
         print_r($forms_from_user);
         ?>

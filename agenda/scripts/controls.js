@@ -124,15 +124,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function updateTitleHiddenInput(title, hiddenInput) {
             // For backend hidden inputs with values
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'new-form';
-            hiddenInput.value = `${title};${titleField.querySelector('#description').value}`;
+            let appendTitle = title.trim().replace(/;/g, '\\;');
+            hiddenInput.value = `${appendTitle};${titleField.querySelector('#description').value}`;
         }
         function updateDescriptionHiddenInput(description, hiddenInput) {
             // For backend hidden inputs with values
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'new-form';
-            hiddenInput.value = `${titleField.querySelector('#title').value};${description}`;
+            let appendDescription = description.trim().replace(/;/g, '\\;');
+            hiddenInput.value = `${titleField.querySelector('#title').value};${appendDescription}`;
         }
 
         titleField.querySelector('#title').addEventListener('input', (e) => {

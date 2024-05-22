@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS users (
 -- Forms, Questions and Answers
 
 CREATE TABLE forms (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     description TEXT,
     owner INT
 );
 
 CREATE TABLE questions (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     fk_forms_id INT,
     content TEXT,
     type VARCHAR(255),
@@ -32,7 +32,7 @@ CREATE TABLE questions (
 );
 
 CREATE TABLE answers (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     fk_questions_id INT,
     content TEXT
 );
