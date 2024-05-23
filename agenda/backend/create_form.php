@@ -69,11 +69,10 @@ try {
 
         // Commit the transaction
         $conn->commit();
-        echo "Transaction committed.<br>";
+        // echo "Transaction committed.<br>";
 
         // Redirect after a short delay for debugging purposes
-        header('refresh:5; url=' . BASE_URL . 'index.php');
-        echo "Redirecting in 5 seconds...<br>";
+        header('Location: ' . BASE_URL . 'index.php');
     } else {
         echo "User not found or session expired.<br>";
     }
