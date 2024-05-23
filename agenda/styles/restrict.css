@@ -1,0 +1,49 @@
+.create-form-link {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.forms {
+    display: grid;
+    margin: 16px;
+}
+
+.create-form-link:hover {
+    background-color: var(--primary-hover);
+}
+
+.forms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form-item {
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(33.333% - 40px); /* 3 columns layout with gaps */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    color: var(--primary-color);
+    margin: 0 0 10px 0;
+}
+
+.form-description {
+    color: var(--text-color);
+    margin: 0 0 10px 0;
+}
+
+.form-owner {
+    color: var(--primary-hover);
+    margin: 0;
+}

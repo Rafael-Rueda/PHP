@@ -74,7 +74,7 @@ if ($stmt1->rowCount() > 0):
             </form>
             <?php include_once (BASE_PATH . 'templates/partials/controls.php'); ?>
         </div>
-        <script type="module" src="<?= BASE_URL . 'scripts/controls.js' ?>"></script>
+        <script type="module" src="<?= BASE_URL . 'scripts/create-form/controls.js' ?>"></script>
     </body>
 
     </html>

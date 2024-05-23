@@ -1,4 +1,4 @@
-import { createElement } from '../utils/utils.js';
+import { createElement } from '../../utils/utils.js';
 
 function updateHiddenInput(questionId, partIndex, newValue) {
     const hiddenInput = document.querySelector(`input[name="${questionId}"]`);

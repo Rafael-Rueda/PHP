@@ -2,7 +2,7 @@
 import { typeFunc } from './question_types.js';
 import { nameFunc } from './question_name.js';
 import { requiredFunc } from './question_required.js';
-import { generateSecureRandomCode, scrollToSmoothly } from '../utils/utils.js'
+import { generateSecureRandomCode, scrollToSmoothly } from '../../utils/utils.js'
 
 document.addEventListener("DOMContentLoaded", function () {
     let atualField = 0;
