@@ -38,38 +38,34 @@ if ($stmt1->rowCount() > 0):
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
-        <a href="<?= BASE_URL . 'templates/pages/create_form.php' ?>">Criar novo formulario</a>
+        <a class="create-form-link" href="<?= BASE_URL . 'templates/pages/create_form.php' ?>">Criar novo formulario</a>
         <div class="forms">
+            <?php
+            $stmt2 = $conn->prepare('SELECT * FROM forms WHERE owner = :user_id');
+            $stmt2->bindParam(':user_id', $user['id']);
+            $stmt2->execute();
 
+            $forms_from_user = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($forms_from_user as $form): ?>
+                <div class="form-item">
+                    <a href="">
+                        <h2 class="form-title"><?= $form['name'] ?></h2>
+                    </a>
+                    <p class="form-description"><?= $form['description'] ?></p>
+                    <p class="form-owner">
+                        <?php
+                        $userStmt = $conn->prepare('SELECT * FROM users WHERE id = :user_id');
+                        $userStmt->bindParam(':user_id', $form['owner']);
+                        $userStmt->execute();
+                        $userfromform = $userStmt->fetch(PDO::FETCH_ASSOC);
+
+                        echo $userfromform['username'];
+                        ?>
+                    </p>
+                </div>
+            <?php endforeach; ?>
         </div>
-        <?php
-        $stmt2 = $conn->prepare('SELECT * FROM forms WHERE owner = :user_id');
-        $stmt2->bindParam(':user_id', $user['id']);
-        $stmt2->execute();
-
-        $forms_from_user = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($forms_from_user as $form_from_user):
-            ?>
-            <div class="form">
-                <div class="title">
-                    <button href=""><h1><?= $form_from_user['name'] ?></h1></button>
-                </div>
-                <div class="description">
-                    <h1><?= $form_from_user['description'] ?></h1>
-                </div>
-                <div class="owner">
-                    <i class="fa-solid fa-user"></i> 
-                    <?php 
-                        $ownerStmt = $conn->prepare(('SELECT * FROM users WHERE id = :user_id'));
-                        $ownerStmt->bindParam(':user_id', $form_from_user['owner']);
-                        $ownerStmt->execute();
-
-                        echo $ownerStmt->fetch(PDO::FETCH_ASSOC)['username'];
-                    ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
     </body>
 
     </html>
