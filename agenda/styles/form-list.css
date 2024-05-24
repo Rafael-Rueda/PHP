@@ -1,0 +1,31 @@
+.form-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px; /* Espaçamento entre os itens */
+    padding: 16px;
+    margin: 16px;
+}
+
+.form-item {
+    background-color: var(--primary-color);
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.form-title h2 {
+    margin: 0;
+    color: var(--text-color);
+}
+.form-description p, .form-number-questions p {
+    color: var(--text-color);
+}
+.form-number-questions p {
+    padding: 10px;
+    border-radius: 5px;
+}
+.form-item:hover {
+    background-color: var(--primary-hover);
+}
