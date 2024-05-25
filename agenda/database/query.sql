@@ -31,6 +31,12 @@ CREATE TABLE questions (
     required BOOLEAN
 );
 
+CREATE TABLE questions_options (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fk_questions_id INT,
+    content TEXT
+);
+
 CREATE TABLE answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fk_questions_id INT,
@@ -45,6 +51,11 @@ ALTER TABLE forms ADD CONSTRAINT FK_forms_owner
 ALTER TABLE questions ADD CONSTRAINT FK_questions_2
     FOREIGN KEY (fk_forms_id)
     REFERENCES forms (id)
+    ON DELETE CASCADE;
+
+ALTER TABLE questions_options ADD CONSTRAINT FK_questions_options
+    FOREIGN KEY (fk_questions_id)
+    REFERENCES questions (id)
     ON DELETE CASCADE;
  
 ALTER TABLE answers ADD CONSTRAINT FK_answers_2

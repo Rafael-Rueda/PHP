@@ -7,6 +7,14 @@ function splitUnescapedSemicolons($string)
     }, $parts);
 }
 
+function splitUnescapedHyphens($string)
+{
+    $parts = preg_split('/(?<!\\\\)-/', $string);
+    return array_map(function ($part) {
+        return str_replace('\-', '-', $part);
+    }, $parts);
+}
+
 include_once ('../utils/base_url.php');
 
 session_start();
@@ -33,6 +41,7 @@ try {
         // Prepare statements for inserting data
         $formStmt = $conn->prepare('INSERT INTO forms (name, description, owner) VALUES (:name, :description, :owner)');
         $questionStmt = $conn->prepare('INSERT INTO questions (fk_forms_id, content, type, required) VALUES (:fk_forms_id, :content, :type, :required)');
+        $optionsStmt = $conn->prepare('INSERT INTO questions_options (fk_questions_id, content) VALUES (:fk_questions_id, :content)');
 
         $formId = '';
         foreach ($_POST as $key => $value) {
@@ -51,11 +60,11 @@ try {
             } else {
                 // Parse question data
                 $parts = splitUnescapedSemicolons($value);
-                
+
                 $content = $parts[0];
                 $type = $parts[1];
                 $required = $parts[2] === 'true' ? 1 : 0;
-                $options = isset($parts[3]) ? $parts[3] : '';
+                $options = isset($parts[3]) ? splitUnescapedHyphens($parts[3]) : '';
 
                 // Debugging output
                 // echo "Inserting question: Form ID = $formId, Content = $content, Type = $type, Required = $required, Options = $options<br>";
@@ -64,6 +73,12 @@ try {
                 $questionStmt->execute([':fk_forms_id' => $formId, ':content' => $content, ':type' => $type, ':required' => $required]);
                 $questionId = $conn->lastInsertId();
                 // echo "Inserted question ID: $questionId<br>";
+
+                if ($options) {
+                    foreach($options as $option) {
+                        $optionsStmt->execute([':fk_questions_id' => $questionId, 'content' => $option]);
+                    }
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 <?php
-include_once ("./utils/base_url.php");
+include_once ("../utils/base_url.php");
 
 // Disable error reporting to avoid non-JSON output
 error_reporting(0);
@@ -22,6 +22,16 @@ if (isset($_GET['form_id'])) {
         $stmt->execute();
 
         $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($questions as &$question) {
+            $stmtOptions = $conn->prepare('SELECT * FROM questions_options WHERE fk_questions_id = :id_question');
+            $stmtOptions->bindParam(':id_question', $question['id'], PDO::PARAM_INT);
+            $stmtOptions->execute();
+
+            $options = $stmtOptions->fetchAll(PDO::FETCH_COLUMN, 2);
+            $question['options'] = $options;
+        }
+
         echo json_encode($questions);
     } catch (PDOException $e) {
         echo json_encode(['error' => $e->getMessage()]);

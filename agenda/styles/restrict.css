@@ -10,8 +10,9 @@
 }
 
 .forms {
-    display: grid;
+    display: flex;
     margin: 16px;
+    gap: 16px;
 }
 
 .create-form-link:hover {

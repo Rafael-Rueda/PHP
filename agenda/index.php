@@ -56,7 +56,8 @@ include_once ("./utils/base_url.php");
         <?php endforeach; ?>
     </div>
 
-    <script>
+    <script type="module">
+        import { expandLongField } from "<?= BASE_URL . 'scripts/create-form/expand_field.js' ?>";
         document.addEventListener('DOMContentLoaded', function () {
             const formList = document.getElementById('form-list');
             const formItems = document.querySelectorAll('.form-item');
@@ -103,31 +104,72 @@ include_once ("./utils/base_url.php");
                                     case 'long-field':
                                         questionInput = document.createElement('textarea');
                                         questionInput.classList.add('long-field');
+                                        questionInput.id = `question_${question.id}`;
+                                        questionInput.placeholder = 'Sua resposta';
+                                        if (question.required) {
+                                            questionInput.required = true;
+                                        } else {
+                                            label.classList.add('hide-after');
+                                        }
                                         break;
                                     case 'short-field':
                                         questionInput = document.createElement('input');
                                         questionInput.classList.add('short-field');
                                         questionInput.type = 'text';
+                                        questionInput.id = `question_${question.id}`;
+                                        questionInput.placeholder = 'Sua resposta';
+                                        if (question.required) {
+                                            questionInput.required = true;
+                                        } else {
+                                            label.classList.add('hide-after');
+                                        }
                                         break;
                                     case 'radio-field':
-                                        questionInput = document.createElement('input');
-                                        questionInput.classList.add('short-field');
+                                        questionInput = document.createElement('div');
+                                        question.options.forEach(option => {
+                                            const radioInput = document.createElement('input');
+                                            radioInput.type = 'radio';
+                                            radioInput.name = `question_${question.id}`;
+                                            radioInput.id = `question-${question.id}-${option}`;
+                                            radioInput.value = option;
+
+                                            const radioLabel = document.createElement('label');
+                                            radioLabel.for = `question-${question.id}-${option}`;
+                                            radioLabel.textContent = option;
+                                            radioLabel.classList.add('hide-after');
+
+                                            if (question.required) {
+                                                radioInput.required = true;
+                                            }
+
+                                            questionInput.appendChild(radioInput);
+                                            questionInput.appendChild(radioLabel);
+                                        });
                                         break;
                                     case 'select-field':
-                                        questionInput = document.createElement('textarea');
-                                        questionInput.classList.add('long-field');
+                                        questionInput = document.createElement('div');
+                                        question.options.forEach(option => {
+                                            const checkboxInput = document.createElement('input');
+                                            checkboxInput.type = 'checkbox';
+                                            checkboxInput.name = `question_${question.id}[]`;
+                                            checkboxInput.id = `question-${question.id}-${option}`;
+                                            checkboxInput.value = option;
+
+                                            const checkboxLabel = document.createElement('label');
+                                            checkboxLabel.for = `question-${question.id}-${option}`;
+                                            checkboxLabel.textContent = option;
+                                            checkboxLabel.classList.add('hide-after');
+
+                                            if (question.required) {
+                                                checkboxInput.required = true;
+                                            }
+
+                                            questionInput.appendChild(checkboxInput);
+                                            questionInput.appendChild(checkboxLabel);
+                                        });
                                         break;
                                     default:
                                         break;
-                                }
-                                
-                                questionInput.name = `question_${question.id}`;
-                                questionInput.id = `question_${question.id}`;
-                                questionInput.placeholder = 'Sua resposta';
-                                
-
-                                if (question.required) {
-                                    questionInput.required = true;
                                 }
 
                                 questionDiv.appendChild(label);
@@ -147,6 +189,8 @@ include_once ("./utils/base_url.php");
 
                             formContainer.appendChild(formElement);
                             document.body.appendChild(formContainer);
+
+                            expandLongField();
                         })
                         .catch(error => console.error('Error fetching questions:', error));
                 });

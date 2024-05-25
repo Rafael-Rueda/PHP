@@ -91,6 +91,10 @@
     vertical-align: top;
 }
 
+.hide-after::after {
+    content: '' !important;
+}
+
 @media screen and (max-width: 1250px) {
     .question {
         width: 500px;
