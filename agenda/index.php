@@ -114,6 +114,7 @@ include_once ("./utils/base_url.php");
                                         }
                                         break;
                                     case 'short-field':
+                                        // teste
                                         questionInput = document.createElement('input');
                                         questionInput.classList.add('short-field');
                                         questionInput.type = 'text';
