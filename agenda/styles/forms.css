@@ -22,12 +22,24 @@
 
 .question {
     width: 600px;
-    height: 180px;
+    min-height: 180px;
     display: grid;
     gap: 16px;
     border-radius: 16px;
     padding: 32px;
     background-color: var(--question-bg-color);
+}
+
+.select-question-fields div.sq-field {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: center;
+}
+
+.select-question-fields {
+    display: grid;
+    gap: 16px;
 }
 
 .question label {
