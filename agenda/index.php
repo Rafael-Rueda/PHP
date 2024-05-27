@@ -58,6 +58,10 @@ include_once ("./utils/base_url.php");
 
     <script type="module">
         import { expandLongField } from "<?= BASE_URL . 'scripts/create-form/expand_field.js' ?>";
+        import { selectField } from "<?= BASE_URL . 'scripts/forms/select_field.js' ?>";
+        import { radioField } from "<?= BASE_URL . 'scripts/forms/radio_field.js' ?>";
+        import { longField } from "<?= BASE_URL . 'scripts/forms/long_field.js' ?>";
+        import { shortField } from "<?= BASE_URL . 'scripts/forms/short_field.js' ?>";
         document.addEventListener('DOMContentLoaded', function () {
             const formList = document.getElementById('form-list');
             const formItems = document.querySelectorAll('.form-item');
@@ -98,89 +102,20 @@ include_once ("./utils/base_url.php");
                                 label.setAttribute('for', `question-${question.id}`);
                                 label.textContent = question.content;
 
-                                let questionInput = ''
+                                let questionInput = '';
 
                                 switch (question.type) {
                                     case 'long-field':
-                                        questionInput = document.createElement('textarea');
-                                        questionInput.classList.add('long-field');
-                                        questionInput.id = `question-${question.id}`;
-                                        questionInput.name = `question-${question.id}`;
-                                        questionInput.placeholder = 'Sua resposta';
-                                        if (question.required) {
-                                            questionInput.required = true;
-                                        } else {
-                                            label.classList.add('hide-after');
-                                        }
+                                        questionInput = longField(question, label);
                                         break;
                                     case 'short-field':
-                                        // teste
-                                        questionInput = document.createElement('input');
-                                        questionInput.classList.add('short-field');
-                                        questionInput.type = 'text';
-                                        questionInput.id = `question-${question.id}`;
-                                        questionInput.name = `question-${question.id}`;
-                                        questionInput.placeholder = 'Sua resposta';
-                                        if (question.required) {
-                                            questionInput.required = true;
-                                        } else {
-                                            label.classList.add('hide-after');
-                                        }
+                                        questionInput = shortField(question, label);
                                         break;
                                     case 'radio-field':
-                                        questionInput = document.createElement('div');
-                                        questionInput.classList.add('select-question-fields');
-                                        question.options.forEach(option => {
-                                            const radioInput = document.createElement('input');
-                                            radioInput.type = 'radio';
-                                            radioInput.name = `question-${question.id}`;
-                                            radioInput.id = `question-${question.id}-${option}`;
-                                            radioInput.value = option;
-
-                                            const radioLabel = document.createElement('label');
-                                            radioLabel.setAttribute('for', `question-${question.id}-${option}`);
-                                            radioLabel.textContent = option;
-                                            radioLabel.classList.add('hide-after');
-
-                                            if (question.required) {
-                                                radioInput.required = true;
-                                            }
-
-                                            const sqField = document.createElement('div');
-                                            sqField.classList.add('sq-field');
-
-                                            sqField.appendChild(radioInput);
-                                            sqField.appendChild(radioLabel);
-                                            questionInput.appendChild(sqField);
-                                        });
+                                        questionInput = radioField(question, label);
                                         break;
                                     case 'select-field':
-                                        questionInput = document.createElement('div');
-                                        questionInput.classList.add('select-question-fields');
-
-                                        question.options.forEach(option => {
-                                            const checkboxInput = document.createElement('input');
-                                            checkboxInput.type = 'checkbox';
-                                            checkboxInput.name = `question-${question.id}[]`;
-                                            checkboxInput.id = `question-${question.id}-${option}`;
-                                            checkboxInput.value = option;
-
-                                            const checkboxLabel = document.createElement('label');
-                                            checkboxLabel.setAttribute('for', `question-${question.id}-${option}`);
-                                            checkboxLabel.textContent = option;
-                                            checkboxLabel.classList.add('hide-after');
-
-                                            if (question.required) {
-                                                checkboxInput.required = true;
-                                            }
-
-                                            const sqField = document.createElement('div');
-                                            sqField.classList.add('sq-field');
-
-                                            sqField.appendChild(checkboxInput);
-                                            sqField.appendChild(checkboxLabel);
-                                            questionInput.appendChild(sqField);
-                                        });
+                                        questionInput = selectField(question, label);
                                         break;
                                     default:
                                         break;
