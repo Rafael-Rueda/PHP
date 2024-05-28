@@ -14,7 +14,7 @@ include_once ("./utils/base_url.php");
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/footer.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/forms.css' ?>">
-    <link rel="stylesheet" href="<?= BASE_URL . 'styles/form-list.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/form_list.css' ?>">
 </head>
 
 <body>
@@ -69,7 +69,7 @@ include_once ("./utils/base_url.php");
             formItems.forEach(item => {
                 item.addEventListener('click', function () {
                     const formId = this.getAttribute('data-form-id');
-                    const requestUrl = `<?= BASE_URL . 'backend/fetch-questions.php' ?>?form_id=${formId}`;
+                    const requestUrl = `<?= BASE_URL . 'backend/fetch_questions.php' ?>?form_id=${formId}`;
                     console.log(`Request URL: ${requestUrl}`);
 
                     // Remove the form list
@@ -92,7 +92,7 @@ include_once ("./utils/base_url.php");
 
                             const formElement = document.createElement('form');
                             formElement.method = 'POST';
-                            formElement.action = '';
+                            formElement.action = '<?= BASE_URL . 'backend/answer_form.php' ?>';
 
                             questions.forEach(question => {
                                 const questionDiv = document.createElement('div');
