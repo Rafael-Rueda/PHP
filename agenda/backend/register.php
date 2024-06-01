@@ -1,6 +1,13 @@
 <?php
 
-include_once('../utils/base_url.php');
+include_once ('../utils/base_url.php');
+
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -10,9 +17,9 @@ $email = $_POST['email'];
 if ($password == $password2) {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $db_dsn = 'mysql:host=localhost;dbname=pesq_db';
-    $db_username = 'root';
-    $db_password = 'password';
+    $db_dsn = $_ENV['DB_DSN'];
+    $db_username = $_ENV['DB_USERNAME'];
+    $db_password = $_ENV['DB_PASSWORD'];
 
     $conn = new PDO($db_dsn, $db_username, $db_password);
 

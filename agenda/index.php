@@ -20,9 +20,17 @@ include_once ("./utils/base_url.php");
 <body>
     <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
     <?php
-    $db_dsn = 'mysql:host=localhost;dbname=pesq_db';
-    $db_username = 'root';
-    $db_password = 'password';
+
+    require BASE_PATH . 'vendor/autoload.php';
+
+    use Dotenv\Dotenv;
+
+    $dotenv = Dotenv::createImmutable(BASE_PATH);
+    $dotenv->load();
+
+    $db_dsn = $_ENV['DB_DSN'];
+    $db_username = $_ENV['DB_USERNAME'];
+    $db_password = $_ENV['DB_PASSWORD'];
 
     $conn = new PDO($db_dsn, $db_username, $db_password);
 
@@ -97,6 +105,13 @@ include_once ("./utils/base_url.php");
                             questions.forEach(question => {
                                 const questionDiv = document.createElement('div');
                                 questionDiv.classList.add('question');
+
+                                const formIdInput = document.createElement('input');
+                                formIdInput.type = 'hidden';
+                                formIdInput.name = 'form_id';
+                                formIdInput.value = formId;
+
+                                questionDiv.appendChild(formIdInput);
 
                                 const label = document.createElement('label');
                                 label.setAttribute('for', `question-${question.id}`);

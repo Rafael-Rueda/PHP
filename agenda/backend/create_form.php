@@ -17,11 +17,18 @@ function splitUnescapedHyphens($string)
 
 include_once ('../utils/base_url.php');
 
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
 session_start();
 
-$db_dsn = 'mysql:host=localhost;dbname=pesq_db';
-$db_username = 'root';
-$db_password = 'password';
+$db_dsn = $_ENV['DB_DSN'];
+$db_username = $_ENV['DB_USERNAME'];
+$db_password = $_ENV['DB_PASSWORD'];
 
 try {
     $conn = new PDO($db_dsn, $db_username, $db_password);

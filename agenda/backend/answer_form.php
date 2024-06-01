@@ -6,6 +6,10 @@ function getIdFromName($questionName) {
 }
 
 function getContentFromPost($postValue) {
+    if (!isset($postValue) || is_null($postValue)) {
+        return ['content' => ''];
+    }
+
     $returnValue = $postValue;
     if (is_array($postValue)) {
         $returnValue = '';
@@ -23,9 +27,16 @@ function getContentFromPost($postValue) {
 
 include_once ('../utils/base_url.php');
 
-$db_dsn = 'mysql:host=localhost;dbname=pesq_db';
-$db_username = 'root';
-$db_password = 'password';
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
+$db_dsn = $_ENV['DB_DSN'];
+$db_username = $_ENV['DB_USERNAME'];
+$db_password = $_ENV['DB_PASSWORD'];
 
 try {
     $conn = new PDO($db_dsn, $db_username, $db_password);
@@ -38,8 +49,12 @@ try {
     $answerStmt = $conn->prepare('INSERT INTO answers (fk_questions_id, content) VALUES (:fk_questions_id, :content)');
     $questionCheckStmt = $conn->prepare('SELECT 1 FROM questions WHERE id = :id');
 
-    foreach($_POST as $key => $value) {
-        $questionId = getIdFromName($key);
+    $questionStmt = $conn->prepare('SELECT * FROM questions WHERE fk_forms_id = :form_id');
+    $questionStmt->execute([':form_id' => $_POST['form_id']]);
+    $questions = $questionStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($questions as $question) {
+        $questionId = $question['id'];
         if ($questionId === null) {
             throw new Exception("Invalid question ID format.");
         }
@@ -50,7 +65,7 @@ try {
             throw new Exception("Question ID $questionId does not exist.");
         }
 
-        $content = getContentFromPost($value);
+        $content = getContentFromPost(isset($_POST['question-' . $questionId]) ? $_POST['question-' . $questionId] : '');
         $answerStmt->execute([':fk_questions_id' => $questionId, ':content' => $content]);
     }
 

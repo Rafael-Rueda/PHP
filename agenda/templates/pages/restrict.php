@@ -5,9 +5,16 @@ include_once ("../../utils/base_url.php");
 
 session_start();
 
-$db_dsn = 'mysql:host=localhost;dbname=pesq_db';
-$db_username = 'root';
-$db_password = 'password';
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
+$db_dsn = $_ENV['DB_DSN'];
+$db_username = $_ENV['DB_USERNAME'];
+$db_password = $_ENV['DB_PASSWORD'];
 
 $conn = new PDO($db_dsn, $db_username, $db_password);
 
@@ -48,22 +55,24 @@ if ($stmt1->rowCount() > 0):
             $forms_from_user = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($forms_from_user as $form): ?>
-                <div class="form-item">
-                    <a href="">
-                        <h2 class="form-title"><?= $form['name'] ?></h2>
-                    </a>
-                    <p class="form-description"><?= $form['description'] ?></p>
-                    <p class="form-owner">
-                        <?php
-                        $userStmt = $conn->prepare('SELECT * FROM users WHERE id = :user_id');
-                        $userStmt->bindParam(':user_id', $form['owner']);
-                        $userStmt->execute();
-                        $userfromform = $userStmt->fetch(PDO::FETCH_ASSOC);
+                <a href="<?= BASE_URL . 'templates/pages/responses.php?form=' . $form['id'] ?>">
+                    <div class="form-item">
 
-                        echo $userfromform['username'];
-                        ?>
-                    </p>
-                </div>
+                        <h2 class="form-title"><?= $form['name'] ?></h2>
+
+                        <p class="form-description"><?= $form['description'] ?></p>
+                        <p class="form-owner">
+                            <?php
+                            $userStmt = $conn->prepare('SELECT * FROM users WHERE id = :user_id');
+                            $userStmt->bindParam(':user_id', $form['owner']);
+                            $userStmt->execute();
+                            $userfromform = $userStmt->fetch(PDO::FETCH_ASSOC);
+
+                            echo $userfromform['username'];
+                            ?>
+                        </p>
+                    </div>
+                </a>
             <?php endforeach; ?>
         </div>
     </body>

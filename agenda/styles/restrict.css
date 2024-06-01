@@ -10,9 +10,15 @@
 }
 
 .forms {
-    display: flex;
+    display: grid;
     margin: 16px;
     gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.forms a {
+    display: block;
+    text-decoration: none;
 }
 
 .create-form-link:hover {
@@ -30,8 +36,12 @@
     background-color: var(--secondary-color);
     border-radius: 10px;
     padding: 15px;
-    width: calc(33.333% - 40px); /* 3 columns layout with gaps */
+    width: 100%; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-item:hover {
+    background-color: var(--secondary-hover);
 }
 
 .form-title {

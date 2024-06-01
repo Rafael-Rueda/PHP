@@ -1,0 +1,34 @@
+.answer {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.title h1,
+.description h1 {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.body {
+    margin-bottom: 20px;
+}
+
+.question p {
+    background-color: var(--question-bg-color);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.answer {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
