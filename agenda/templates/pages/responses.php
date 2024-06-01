@@ -129,7 +129,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                     <h1><?= $form['name'] ?></h1>
                 </div>
                 <div class="description">
-                    <h1><?= $form['description'] ?></h1>
+                    <p><?= $form['description'] ?></p>
                 </div>
             </div>
             <?php
