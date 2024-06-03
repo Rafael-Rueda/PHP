@@ -15,7 +15,7 @@ export function selectField(question, label) {
         checkboxLabel.textContent = option;
         checkboxLabel.classList.add('hide-after');
 
-        if (question.required) {
+        if (parseInt(question.required)) {
             checkboxInput.required = true;
         } else {
             label.classList.add('hide-after');

@@ -6,10 +6,12 @@ import { generateSecureRandomCode, scrollToSmoothly } from '../../utils/utils.js
 
 document.addEventListener("DOMContentLoaded", function () {
     let atualField = 0;
+    let atualHiddenInput = 0;
     const addButton = document.querySelector('.add-field');
 
     const controls = document.querySelector('.controls');
     let old_fields = document.querySelectorAll('.create-field');
+    let oldHiddenInputs = [];
     const create_form = document.querySelector('.create-form');
 
     function fieldClicked(field, index) {
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         controls.style.display = 'block';
 
         atualField = index;
+        atualHiddenInput = index - 1;
     };
 
     function createFieldClickFunction(field, index) {
@@ -46,6 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
             field.addEventListener('click', listener);
         });
         old_fields = fields;
+
+        // For backend hidden inputs
+        const hiddenInputFields = document.getElementById('create-form').querySelectorAll('input[type=hidden');
+
+        oldHiddenInputs = hiddenInputFields;
 
         // Makes long fields expansible
         const longFields = document.querySelectorAll('.long-field');
@@ -228,7 +236,8 @@ document.addEventListener("DOMContentLoaded", function () {
         questionHiddenInput.value = `${input.value};${select.value};${checkbox.checked}`;
 
         const createForm = document.getElementById('create-form');
-        createForm.appendChild(questionHiddenInput);
+        // createForm.appendChild(questionHiddenInput);
+        createForm.insertBefore(questionHiddenInput, oldHiddenInputs[atualHiddenInput + 1]);
     }
 
     function removeQuestion(id) {

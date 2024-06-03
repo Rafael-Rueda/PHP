@@ -94,7 +94,6 @@ include_once ("./utils/base_url.php");
                                 console.error(questions.error);
                                 return;
                             }
-
                             const formContainer = document.createElement('div');
                             formContainer.classList.add('request-form');
 

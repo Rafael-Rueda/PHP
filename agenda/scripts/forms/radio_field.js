@@ -14,7 +14,7 @@ export function radioField(question, label) {
         radioLabel.textContent = option;
         radioLabel.classList.add('hide-after');
 
-        if (question.required) {
+        if (parseInt(question.required)) {
             radioInput.required = true;
         } else {
             label.classList.add('hide-after');
