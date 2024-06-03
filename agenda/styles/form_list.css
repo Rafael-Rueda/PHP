@@ -28,3 +28,9 @@
 .form-item:hover {
     background-color: var(--primary-hover);
 }
+
+.create-img {
+    display: flex;
+    justify-content: center;
+    grid-column: span 2;
+}

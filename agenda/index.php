@@ -83,6 +83,17 @@ include_once ("./utils/base_url.php");
                     // Remove the form list
                     formList.innerHTML = '';
 
+                    // Add the image of the form
+                    var imageContainerDiv = document.createElement('div');
+                    imageContainerDiv.className = 'create-img';
+
+                    var headerImage = document.createElement('img');
+                    headerImage.src = '<?= BASE_URL . "images/cabecalho.jpg" ?>';
+                    headerImage.alt = 'header';
+
+                    imageContainerDiv.appendChild(headerImage);
+                    formList.appendChild(imageContainerDiv);
+
                     // Fetch questions for the selected form
                     fetch(requestUrl)
                         .then(response => response.text()) // Use text() to debug raw response
