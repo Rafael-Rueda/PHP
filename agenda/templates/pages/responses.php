@@ -89,10 +89,10 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
 
     // Get the max fields (registers) of the question's answer
     $maxFields = 0;
-    
+
     foreach ($answers as $orderedQuestionID => $answer) {
         $i = 0;
-        foreach($answer as $keyField => $field ) {
+        foreach ($answer as $keyField => $field) {
             $i++;
         }
         if ($maxFields < $i) {
@@ -101,11 +101,11 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
     }
 
     // Fetch the answers for the current page
-    foreach($answers as $orderedQuestionID => $answer) {
+    foreach ($answers as $orderedQuestionID => $answer) {
         array_push($currentAnswersAndQuestions, [$questions[$orderedQuestionID], isset($answer[0]) ? array_slice($answer, $startIndex, $answersPerPage)[0] : ['content' => '']]);
     }
-    
-    
+
+
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -154,11 +154,21 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
 
         <!-- Pagination -->
         <div class="pagination">
-            <?php
-            for ($c = 1; $c <= $totalPages; $c++):
-                ?>
-                <span><a href="?form=<?= $form_id ?>&page=<?= $c ?>"><?= $c ?></a></span>
-            <?php endfor; ?>
+            <?php if ($page !== 1): ?>
+                <span><a href="?form=<?= $form_id ?>&page=<?= 1 ?>"><?= 1 ?></a></span>
+                <span> ... </span>
+            <?php endif; ?>
+            <?php if ($page - 1 > 1): ?>
+                <span><a href="?form=<?= $form_id ?>&page=<?= $page - 1 ?>"><?= $page - 1 ?></a></span>
+            <?php endif; ?>
+            <span><a href="?form=<?= $form_id ?>&page=<?= $page ?>"><?= $page ?></a></span>
+            <?php if ($page + 1 < $totalPages): ?>
+                <span><a href="?form=<?= $form_id ?>&page=<?= $page + 1 ?>"><?= $page + 1 ?></a></span>
+            <?php endif; ?>
+            <?php if ($page !== $totalPages): ?>
+                <span> ... </span>
+                <span><a href="?form=<?= $form_id ?>&page=<?= $totalPages ?>"><?= $totalPages ?></a></span>
+            <?php endif; ?>
         </div>
     </body>
 

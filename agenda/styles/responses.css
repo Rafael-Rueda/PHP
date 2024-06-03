@@ -32,3 +32,25 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.pagination {
+    margin: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.pagination a {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.pagination a:hover {
+    background-color: var(--primary-hover);
+}
+
+.pagination a {
+    color: white;
+    text-decoration: none;
+}
