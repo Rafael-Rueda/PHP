@@ -186,6 +186,15 @@
     border: 1px solid var(--secondary-color);
 }
 
+#create-form button[type=submit] {
+    padding: 8px;
+    background-color: var(--question-bg-color);
+    color: black;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    border-radius: 4px;
+}
+
 /* Media queries */
 
 @media screen and (max-width: 1250px) {

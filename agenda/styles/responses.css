@@ -54,3 +54,13 @@
     color: white;
     text-decoration: none;
 }
+
+.controls button {
+    padding: 8px;
+    background-color: var(--question-bg-color);
+    color: black;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 16px;
+}

@@ -31,6 +31,17 @@
 
 .create-img {
     display: flex;
+    width: 100%;
     justify-content: center;
-    grid-column: span 2;
+    grid-column: span 10;
+}
+
+@media screen and (max-width: 600px) {
+    .create-img img {
+        width: 100%;
+    }
+
+    .create-img {
+        grid-column: span 2;
+    }
 }

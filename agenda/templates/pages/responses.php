@@ -119,10 +119,33 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/responses.css' ?>">
+
+        <!-- script -->
+        <script src="https://kit.fontawesome.com/b559fbf78d.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php') ?>
+
+        <div class="filters">
+            <h2>Filtros</h2>
+
+            <div class="filter-select">
+                <p>Selecione o campo alvo para o filtro</p>
+                <select name="filter-select" id="filter-select">
+                    <option value="">Nenhum campo</option>
+                    <?php foreach ($currentAnswersAndQuestions as $option): ?>
+                        <option value="<?= $option[0]['content'] ?>"><?= $option[0]['content'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="filter-value">
+                <p>Digite o valor a ser procurado</p>
+                <input type="text" name="filter-value" id="filter-value" placeholder="Ex: Rafael">
+            </div>
+            <button id="filter-submit">Filtrar</button>
+        </div>
+
         <div class="answer">
             <div class="header">
                 <div class="title">
@@ -170,6 +193,43 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 <span><a href="?form=<?= $form_id ?>&page=<?= $totalPages ?>"><?= $totalPages ?></a></span>
             <?php endif; ?>
         </div>
+
+        <!-- Google Docs -->
+        <div class="controls">
+            <button><i class="fa-solid fa-file-word"></i> Gerar Google Docs</button>
+        </div>
+
+        <!-- src="<?= BASE_URL . 'scripts/responses/filters.js' ?>" -->
+        <script type="module">
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const filtersDiv = document.querySelector('.filters');
+                const submitButton = filtersDiv.querySelector('button#filter-submit');
+
+                const filterSelect = filtersDiv.querySelector('#filter-select');
+                const filterValue = filtersDiv.querySelector('#filter-value');
+
+                let question =filterSelect.value;
+                let answer =filterValue.value;
+                let form = <?= $form_id ?>;
+
+                filterSelect.addEventListener('change', (e) => {
+                    question = e.target.value;
+                });
+                filterValue.addEventListener('change', (e) => {
+                    answer = e.target.value;
+                });
+
+                submitButton.addEventListener('click', () => {
+                    const url = `<?= BASE_URL . 'backend/filters.php' ?>?question=${question}&form=${form}&answer=${answer}`;
+                    fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                    });
+                });
+            });
+        </script>
     </body>
 
     </html>
