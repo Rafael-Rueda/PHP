@@ -46,8 +46,9 @@ if (isset($_GET['question']) && isset($_GET['form'])) {
 
     $allQuestions = $allQuestionsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Getting the total of questions
-    $totalQuestionsStmt = $conn->prepare('SELECT COUNT(*) as total FROM questions');
+    // Getting the total of questions of the form
+    $totalQuestionsStmt = $conn->prepare('SELECT COUNT(*) as total FROM questions WHERE fk_forms_id = :form_id');
+    $totalQuestionsStmt->bindParam(':form_id', $_GET['form']);
     $totalQuestionsStmt->execute();
     $totalQuestions = $totalQuestionsStmt->fetch(PDO::FETCH_ASSOC)['total'];
 

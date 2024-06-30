@@ -201,6 +201,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
 
         <!-- src="<?= BASE_URL . 'scripts/responses/filters.js' ?>" -->
         <script type="module">
+            import { loadFilteredData } from "<?= BASE_URL . 'scripts/responses/filters.js' ?>";
 
             document.addEventListener('DOMContentLoaded', () => {
                 const filtersDiv = document.querySelector('.filters');
@@ -225,7 +226,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                     fetch(url)
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data);
+                        loadFilteredData(data);
                     });
                 });
             });
