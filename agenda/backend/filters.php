@@ -17,14 +17,19 @@ $db_password = $_ENV['DB_PASSWORD'];
 
 $conn = new PDO($db_dsn, $db_username, $db_password);
 
-if (isset($_GET['question']) || isset($_GET['answer'])) {
+if (isset($_GET['question']) && isset($_GET['form'])) {
     $questionStmt = $conn->prepare('SELECT * FROM questions WHERE content = :question_content AND fk_forms_id = :form_id');
     $questionStmt->bindParam(':question_content', $_GET['question']);
     $questionStmt->bindParam(':form_id', $_GET['form']);
     $questionStmt->execute();
 
-    $question = $questionStmt->fetchAll(PDO::FETCH_ASSOC);
-    $question_id = $question[0]['id'];
+    $question = $questionStmt->fetch(PDO::FETCH_ASSOC);
+    if (count($question) > 0) {
+        $question_id = $question['id'];
+    } else {
+        echo json_encode(['error' => 'Question not found']);
+        exit();
+    }
 
     $answerContent = '%' . $_GET['answer'] . '%';
     $answerStmt = $conn->prepare('SELECT * FROM answers WHERE fk_questions_id = :question_id AND content LIKE :answer_content');
@@ -41,28 +46,61 @@ if (isset($_GET['question']) || isset($_GET['answer'])) {
 
     $allQuestions = $allQuestionsStmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Getting the total of questions
+    $totalQuestionsStmt = $conn->prepare('SELECT COUNT(*) as total FROM questions');
+    $totalQuestionsStmt->execute();
+    $totalQuestions = $totalQuestionsStmt->fetch(PDO::FETCH_ASSOC)['total'];
+
     // Getting all answers from the questions
     $allAnswers = [];
 
-    foreach($allQuestions as $quest) {
-        $allAnswersStmt = $conn->prepare('SELECT * FROM answers WHERE fk_questions_id = :question_id');
-        $allAnswersStmt->bindParam(':question_id', $quest['id']);
-        $allAnswersStmt->execute();
-        
-        array_push($allAnswers, $allAnswersStmt->fetch(PDO::FETCH_ASSOC));
-    }
+    foreach ($answer as $unique_answer) {
+        // Descending loop
+        $appendAnswers = [];
+        $appendOrderedAnswers = [];
+        $orderOfQuestion = intval($question['question_order']);
+        $counter = 0;
+        while ($orderOfQuestion >= 0) {
+            $idAnswer = intval($unique_answer['id']) - $counter;
+            $appendAnswersStmt = $conn->prepare('SELECT * FROM answers WHERE id = :id');
+            $appendAnswersStmt->bindParam(':id', $idAnswer);
+            $appendAnswersStmt->execute();
 
+            $appendAnswer = $appendAnswersStmt->fetch(PDO::FETCH_ASSOC);
 
-    $currentAnswersAndQuestions = [];
-
-    foreach ($answer as $answercontain) {
-        $answerContainIndex = array_search($answercontain, $allAnswers);
-        foreach ($allQuestions as $questIndex => $quest) {
-            array_push($currentAnswersAndQuestions, [$quest, $allAnswers[$answerContainIndex]]);
+            array_push($appendOrderedAnswers, $appendAnswer);
+            $orderOfQuestion--;
+            $counter++;
         }
+
+        foreach(array_reverse($appendOrderedAnswers) as $orderedAnswer) {
+            array_push($appendAnswers, $orderedAnswer);
+        }
+
+        // Increasing loop
+        $orderOfQuestion = intval($question['question_order']) + 1;
+        $counter = 1;
+        while ($orderOfQuestion < $totalQuestions) {
+            $idAnswer = intval($unique_answer['id']) + $counter;
+            $appendAnswersStmt = $conn->prepare('SELECT * FROM answers WHERE id = :id');
+            $appendAnswersStmt->bindParam(':id', $idAnswer);
+            $appendAnswersStmt->execute();
+
+            $appendAnswer = $appendAnswersStmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$appendAnswer) {
+                break;
+            }
+
+            array_push($appendAnswers, $appendAnswer);
+            $orderOfQuestion++;
+            $counter++;
+        }
+
+        array_push($allAnswers, $appendAnswers);
     }
 
-    echo json_encode(['answers' => $allAnswers]);
+    echo json_encode($allAnswers);
 
 } else {
     echo json_encode(['error' => 'Please provide the correct parameters']);

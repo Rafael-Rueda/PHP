@@ -28,7 +28,8 @@ CREATE TABLE questions (
     fk_forms_id INT,
     content TEXT,
     type VARCHAR(255),
-    required BOOLEAN
+    required BOOLEAN,
+    question_order INT
 );
 
 CREATE TABLE questions_options (

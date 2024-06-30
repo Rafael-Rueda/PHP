@@ -47,10 +47,12 @@ try {
 
         // Prepare statements for inserting data
         $formStmt = $conn->prepare('INSERT INTO forms (name, description, owner) VALUES (:name, :description, :owner)');
-        $questionStmt = $conn->prepare('INSERT INTO questions (fk_forms_id, content, type, required) VALUES (:fk_forms_id, :content, :type, :required)');
+        $questionStmt = $conn->prepare('INSERT INTO questions (fk_forms_id, content, type, required, question_order) VALUES (:fk_forms_id, :content, :type, :required, :order)');
         $optionsStmt = $conn->prepare('INSERT INTO questions_options (fk_questions_id, content) VALUES (:fk_questions_id, :content)');
 
         $formId = '';
+
+        $count_order = 0;
         foreach ($_POST as $key => $value) {
             if ($key == 'new-form') {
                 // Parse form data
@@ -72,12 +74,13 @@ try {
                 $type = $parts[1];
                 $required = $parts[2] === 'true' ? 1 : 0;
                 $options = isset($parts[3]) ? splitUnescapedHyphens($parts[3]) : '';
+                $order = $count_order;
 
                 // Debugging output
                 // echo "Inserting question: Form ID = $formId, Content = $content, Type = $type, Required = $required, Options = $options<br>";
 
                 // Insert question data
-                $questionStmt->execute([':fk_forms_id' => $formId, ':content' => $content, ':type' => $type, ':required' => $required]);
+                $questionStmt->execute([':fk_forms_id' => $formId, ':content' => $content, ':type' => $type, ':required' => $required, 'order' => $order]);
                 $questionId = $conn->lastInsertId();
                 // echo "Inserted question ID: $questionId<br>";
 
@@ -86,6 +89,8 @@ try {
                         $optionsStmt->execute([':fk_questions_id' => $questionId, 'content' => $option]);
                     }
                 }
+
+                $count_order++;
             }
         }
 

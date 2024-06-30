@@ -1,5 +1,5 @@
 <?php
-$path = '/cursophp/github/agenda/';
+$path = '/github/agenda/';
 // $path = '/cursophp/agenda/';
 
 define("BASE_URL", 'http://' . $_SERVER['HTTP_HOST'] . $path);
