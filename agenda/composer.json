@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "arcan/agenda",
     "type": "project",
     "autoload": {
@@ -7,10 +6,6 @@
             "Arcan\\Agenda\\": "src/"
         }
     },
-=======
-    "name": "rafael/agenda",
-    "type": "project",
->>>>>>> 78d0d06ef0e51fec2e231b2db0e245d98af0f474
     "require": {
         "vlucas/phpdotenv": "^5.6"
     }
