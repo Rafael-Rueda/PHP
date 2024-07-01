@@ -1,0 +1,128 @@
+.question textarea, .question input {
+    display: block;
+    resize: none;
+    min-height: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    line-height: 1.5;
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    padding-left: 8px;
+    box-sizing: border-box;
+    font-size: 20px;
+    height: 30px;
+    background-color: transparent;
+}
+
+.question textarea:focus, .question input:focus {
+    border-bottom: 2px solid var(--primary-hover);
+    outline: none;
+}
+
+.question {
+    width: 600px;
+    min-height: 180px;
+    display: grid;
+    gap: 16px;
+    border-radius: 16px;
+    padding: 32px;
+    background-color: var(--question-bg-color);
+}
+
+.select-question-fields div.sq-field {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: center;
+}
+
+.select-question-fields {
+    display: grid;
+    gap: 16px;
+}
+
+.question label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.request-form {
+    box-sizing: border-box;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    display: grid;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+    margin: auto;
+    width: 50%;
+    grid-template-columns: 1fr;
+    background-color: white;
+    min-height: 600px;
+    border-left: 2px solid var(--primary-color);
+}
+
+.request-form form {
+    display: grid;
+    gap: 64px;
+    grid-template-rows: repeat(auto-fit, minmax(180px, calc(auto + 64px)));
+}
+
+.submit button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+
+    border: none;
+    padding: 32px;
+    width: 300px;
+    height: 60px;
+    font-size: 36px;
+    border-radius: 8px;
+
+    display: grid;
+    align-content: center;
+
+}
+
+.submit button:hover {
+    background-color: var(--primary-hover);
+    cursor: pointer;
+}
+
+.submit {
+    display: grid;
+    justify-content: center;
+}
+
+.question label::after {
+    content: ' *';
+    color: red;
+    vertical-align: top;
+}
+
+.hide-after::after {
+    content: '' !important;
+}
+
+@media screen and (max-width: 1250px) {
+    .question {
+        width: 500px;
+    }
+
+    .request-form {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .question {
+        width: 400px;
+    }
+
+    .request-form {
+        width: 100%;
+    }
+}

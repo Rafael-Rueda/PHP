@@ -1,0 +1,55 @@
+div.bodyform {
+    display: grid;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: 1fr;
+}
+
+form {
+    background-color: var(--primary-color);
+    padding: 16px;
+    color: var(--text-color);
+    font-weight: bold;
+
+    display: grid;
+}
+
+form label {
+    display: block;
+}
+
+form div {
+    margin: 16px;
+}
+
+form div:nth-of-type(2), form div:nth-of-type(3), form div:nth-of-type(4) {
+    margin-top: -8px;
+}
+
+form input[type=text], input[type=password], input[type=email] {
+    width: 512px;
+    height: 32px;
+    padding: 8px;
+}
+
+form button[type=submit] {
+    margin: auto;
+    color: white;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    outline: none;
+    border: none;
+    width: 256px;
+    height: 64px ;
+    padding: 16px;
+
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    justify-content: center;
+}
+
+form button[type=submit]:hover {
+    background-color: var(--secondary-hover);
+}
