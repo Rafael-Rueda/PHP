@@ -126,6 +126,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php') ?>
+<<<<<<< HEAD
 
         <div class="filters">
             <h2>Filtros</h2>
@@ -144,6 +145,30 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 <input type="text" name="filter-value" id="filter-value" placeholder="Ex: Rafael">
             </div>
             <button id="filter-submit">Filtrar</button>
+=======
+        <div class="filter-container">
+            <button id="toggle-filters">
+                <span id="arrow">&#9654;</span> Filtros
+            </button>
+            <div class="filters" id="filters">
+                <h2>Filtros</h2>
+
+                <div class="filter-select">
+                    <p>Selecione o campo alvo para o filtro</p>
+                    <select name="filter-select" id="filter-select">
+                        <option value="">Nenhum campo</option>
+                        <?php foreach ($currentAnswersAndQuestions as $option): ?>
+                            <option value="<?= $option[0]['content'] ?>"><?= $option[0]['content'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="filter-value">
+                    <p>Digite o valor a ser procurado</p>
+                    <input type="text" name="filter-value" id="filter-value" placeholder="Ex: Rafael">
+                </div>
+                <button id="filter-submit">Filtrar</button>
+            </div>
+>>>>>>> 78d0d06ef0e51fec2e231b2db0e245d98af0f474
         </div>
 
         <div class="answer">
@@ -210,8 +235,13 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 const filterSelect = filtersDiv.querySelector('#filter-select');
                 const filterValue = filtersDiv.querySelector('#filter-value');
 
+<<<<<<< HEAD
                 let question =filterSelect.value;
                 let answer =filterValue.value;
+=======
+                let question = filterSelect.value;
+                let answer = filterValue.value;
+>>>>>>> 78d0d06ef0e51fec2e231b2db0e245d98af0f474
                 let form = <?= $form_id ?>;
 
                 filterSelect.addEventListener('change', (e) => {
@@ -224,6 +254,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 submitButton.addEventListener('click', () => {
                     const url = `<?= BASE_URL . 'backend/filters.php' ?>?question=${question}&form=${form}&answer=${answer}`;
                     fetch(url)
+<<<<<<< HEAD
                     .then((response) => response.json())
                     .then((data) => {
                         loadFilteredData(data);
@@ -231,6 +262,16 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 });
             });
         </script>
+=======
+                        .then((response) => response.json())
+                        .then((data) => {
+                            loadFilteredData(data);
+                        });
+                });
+            });
+        </script>
+        <script src="<?= BASE_URL . 'scripts/responses/filter-menu.js'?>"></script>
+>>>>>>> 78d0d06ef0e51fec2e231b2db0e245d98af0f474
     </body>
 
     </html>
