@@ -70,7 +70,7 @@
 /* Container for filter and toggle button */
 .filter-container {
     display: block;
-    max-width: 100%;
+    max-width: 98%;
     margin: 16px auto 0;
 }
 

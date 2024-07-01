@@ -204,9 +204,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
         </div>
 
         <!-- src="<?= BASE_URL . 'scripts/responses/filters.js' ?>" -->
-        <script type="module">
-            import { loadFilteredData } from "<?= BASE_URL . 'scripts/responses/filters.js' ?>";
-
+        <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const filtersDiv = document.querySelector('.filters');
                 const submitButton = filtersDiv.querySelector('button#filter-submit');
@@ -230,12 +228,82 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                     fetch(url)
                         .then((response) => response.json())
                         .then((data) => {
-                            loadFilteredData(data);
+                            loadFilteredData(data, form);
                         });
                 });
             });
+
+            function loadFilteredData(data, formID) {
+                // For debug purpouses
+                console.log(data);
+
+                // Clear all the answers
+                document.querySelector('.answer').remove();            
+
+                data.forEach((answer) => {
+                    const answerContainer = document.createElement('div');
+                    answerContainer.classList.add('answer');
+
+                    const formName = '<?= $form['name'] ?>';
+                    const formDesc = '<?= $form['description'] ?>';
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.classList.add('header');
+
+                    const titleDiv = document.createElement('div');
+                    titleDiv.classList.add('title');
+                    const titleH1 = document.createElement('h1');
+                    titleH1.textContent = formName;
+                    titleDiv.appendChild(titleH1);
+
+                    const descriptionDiv = document.createElement('div');
+                    descriptionDiv.classList.add('description');
+                    const descriptionP = document.createElement('p');
+                    descriptionP.textContent = formDesc;
+                    descriptionDiv.appendChild(descriptionP);
+
+                    headerDiv.appendChild(titleDiv);
+                    headerDiv.appendChild(descriptionDiv);
+
+                    answerContainer.appendChild(headerDiv);
+
+                    let counter = 0;
+                    const url = `<?= BASE_URL . 'backend/fetch_questions.php' ?>?form_id=${formID}`
+                    fetch(url)
+                        .then((response) => response.json())
+                        .then((questionsData) => {
+                            answer.forEach((answer) => {
+                                const answerBody = document.createElement('div');
+                                answerBody.classList.add('body');
+
+                                const questionDiv = document.createElement('div');
+                                questionDiv.classList.add('question');
+                                const questionP = document.createElement('p');
+                                questionP.textContent = questionsData[counter].content;
+
+                                questionDiv.appendChild(questionP);
+
+                                const answerDiv = document.createElement('div');
+                                answerDiv.classList.add('answer');
+                                const answerP = document.createElement('p');
+                                answerP.textContent = answer.content;
+                                answerDiv.appendChild(answerP);
+
+                                answerBody.appendChild(questionDiv);
+                                answerBody.appendChild(answerDiv);
+
+                                answerContainer.appendChild(answerBody);
+
+                                counter++;
+                            });
+
+                        });
+
+                        document.body.appendChild(answerContainer);
+                });
+            }
         </script>
-        <script src="<?= BASE_URL . 'scripts/responses/filter-menu.js'?>"></script>
+        <script src="<?= BASE_URL . 'scripts/responses/filter-menu.js' ?>"></script>
     </body>
 
     </html>
