@@ -17,7 +17,7 @@ $db_password = $_ENV['DB_PASSWORD'];
 
 $conn = new PDO($db_dsn, $db_username, $db_password);
 
-if (isset($_GET['question']) && isset($_GET['form'])) {
+if (isset($_GET['question']) && isset($_GET['form']) && $_GET['question'] != '') {
     $questionStmt = $conn->prepare('SELECT * FROM questions WHERE content = :question_content AND fk_forms_id = :form_id');
     $questionStmt->bindParam(':question_content', $_GET['question']);
     $questionStmt->bindParam(':form_id', $_GET['form']);
