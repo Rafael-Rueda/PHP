@@ -203,7 +203,6 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
             <button><i class="fa-solid fa-file-word"></i> Gerar Google Docs</button>
         </div>
 
-        <!-- src="<?= BASE_URL . 'scripts/responses/filters.js' ?>" -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const filtersDiv = document.querySelector('.filters');
