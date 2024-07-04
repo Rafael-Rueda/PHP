@@ -113,8 +113,44 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Function to initialize options based on existing hidden inputs
+    const initializeOptions = () => {
+        const createForm = document.getElementById('create-form');
+        const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
+
+        hiddenInputs.forEach(hiddenInput => {
+            addOrUpdateOption(hiddenInput);
+            hiddenInput.removeEventListener('change', hiddenInputExec);
+            hiddenInput.addEventListener('change', hiddenInputExec);
+
+            function hiddenInputExec() {
+                console.log('mudou');
+                addOrUpdateOption(hiddenInput);
+            }
+        });
+    };
+
+    // Function to add or update an option in the select
+    const addOrUpdateOption = (hiddenInput) => {
+        const periodVerifier = document.getElementById('period-verifier');
+        const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.id}"]`);
+        const value = hiddenInput.value.split(';')[0];
+        console.log(value);
+        if (existingOption) {
+            existingOption.value = value;
+            existingOption.text = value;
+        } else {
+            const option = document.createElement('option');
+            option.value = value;
+            option.text = value;
+            option.dataset.id = hiddenInput.id;
+            periodVerifier.add(option);
+        }
+    };
+
     function createConfigChangeListeners() {
-        const configField = document.querySelector('.create-config');
+        // Initialize options on page load
+        initializeOptions();
     }
 
     createConfigChangeListeners();
@@ -244,6 +280,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const createForm = document.getElementById('create-form');
         // createForm.appendChild(questionHiddenInput);
         createForm.insertBefore(questionHiddenInput, oldHiddenInputs[atualHiddenInput + 1]);
+
+        // For form-configs
+
+        initializeOptions();
     }
 
     function removeQuestion(id) {

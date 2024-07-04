@@ -58,8 +58,23 @@ if ($stmt1->rowCount() > 0):
                     <i class="fa-solid fa-gear"></i>
                     <div class="configs">
                         <div class="period">
-                            <p>Periodicidade das respostas</p>
-                            <select name="period" id="period"></select>
+                            <h3 class="period-title">Periodicidade</h3>
+                            <div>
+                                <p>Unidade de periodizacao</p>
+                                <select type="number" name="period-unit" id="period-unit">
+                                    
+                                </select>
+                            </div>
+                            <div>
+                                <p>Periodicidade das respostas</p>
+                                <input type="number" value="0" name="period-value" id="period-value"></input>
+                            </div>
+                            <div>
+                                <p>Campo verificador</p>
+                                <select type="number" name="period-verifier" id="period-verifier">
+
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
