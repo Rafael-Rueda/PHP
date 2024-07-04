@@ -114,28 +114,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Function to initialize options based on existing hidden inputs
-    const initializeOptions = () => {
+    const initializeOptions = (hiddenInput) => {
         const createForm = document.getElementById('create-form');
         const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
 
-        Array.from(hiddenInputs).forEach(hiddenInput => {
-            addOrUpdateOption(hiddenInput);
-            hiddenInput.removeEventListener('change', hiddenInputExec);
-            hiddenInput.addEventListener('change', hiddenInputExec);
-
-            function hiddenInputExec() {
-                console.log('mudou');
-                addOrUpdateOption(hiddenInput);
-            }
-        });
-    };
+        addOrUpdateOption(hiddenInput);
+        observeHiddenInput(hiddenInput);
+    }
 
     // Function to add or update an option in the select
     const addOrUpdateOption = (hiddenInput) => {
         const periodVerifier = document.getElementById('period-verifier');
-        const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.id}"]`);
+        const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.name}"]`);
         const value = hiddenInput.value.split(';')[0];
-        console.log(value);
+
         if (existingOption) {
             existingOption.value = value;
             existingOption.text = value;
@@ -143,17 +135,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const option = document.createElement('option');
             option.value = value;
             option.text = value;
-            option.dataset.id = hiddenInput.id;
+            option.dataset.id = hiddenInput.name;
             periodVerifier.add(option);
         }
-    };
-
-    function createConfigChangeListeners() {
-        // Initialize options on page load
-        initializeOptions();
     }
 
-    createConfigChangeListeners();
+    // Function to observe hidden input changes using MutationObserver
+    const observeHiddenInput = (hiddenInput) => {
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                    addOrUpdateOption(hiddenInput);
+                }
+            });
+        });
+
+        observer.observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
+    }
 
     function createTitleChangeListeners() {
         const titleField = document.querySelector('.create-title');
@@ -282,8 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         createForm.insertBefore(questionHiddenInput, oldHiddenInputs[atualHiddenInput + 1]);
 
         // For form-configs
-
-        initializeOptions();
+        initializeOptions(questionHiddenInput);
     }
 
     function removeQuestion(id) {
@@ -308,6 +305,16 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 console.log('Hiding controls');
                 controls.style.display = 'none';
+            }
+
+            // For form-configs
+            initializeOptions(hiddenInput);
+
+            // Remove the corresponding option in the period-verifier
+            const periodVerifier = document.getElementById('period-verifier');
+            const optionToRemove = periodVerifier.querySelector(`option[data-id="${id}"]`);
+            if (optionToRemove) {
+                optionToRemove.remove();
             }
         }
     }
