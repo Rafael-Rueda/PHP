@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const createForm = document.getElementById('create-form');
         const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
 
-        hiddenInputs.forEach(hiddenInput => {
+        Array.from(hiddenInputs).forEach(hiddenInput => {
             addOrUpdateOption(hiddenInput);
             hiddenInput.removeEventListener('change', hiddenInputExec);
             hiddenInput.addEventListener('change', hiddenInputExec);

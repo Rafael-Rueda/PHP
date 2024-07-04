@@ -3,7 +3,7 @@
         'name' => 'arcan/agenda',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '44cbd3860717db399f01bafbfb3f4a0a1c19fcca',
+        'reference' => '693e18fc7fb1b3a239fc39a4c5c84b7beb99131a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'arcan/agenda' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '44cbd3860717db399f01bafbfb3f4a0a1c19fcca',
+            'reference' => '693e18fc7fb1b3a239fc39a4c5c84b7beb99131a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
