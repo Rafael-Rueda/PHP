@@ -113,6 +113,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function createConfigChangeListeners() {
+        const configField = document.querySelector('.create-config');
+    }
+
+    createConfigChangeListeners();
+
     function createTitleChangeListeners() {
         const titleField = document.querySelector('.create-title');
 

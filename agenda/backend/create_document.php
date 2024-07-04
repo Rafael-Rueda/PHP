@@ -1,14 +1,14 @@
 <?php
 include_once ("../utils/base_url.php");
 
-require_once 'vendor/autoload.php';
+require_once BASE_PATH . 'vendor/autoload.php';
+
+session_start();
 
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();
-
-session_start();
 
 $client = new Google_Client();
 $client->setClientId($_ENV['CLIENT_ID']);

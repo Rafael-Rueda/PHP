@@ -43,6 +43,14 @@ function clearQuestionContent(questionId) {
     return contentDiv;
 }
 
+function showRequiredOption(questionId) {
+    const questionDiv = document.getElementById(questionId);
+    const requiredDiv = questionDiv.querySelector('.required');
+    if (requiredDiv) {
+        requiredDiv.style.display = 'flex';
+    }
+}
+
 function shortFieldFunc(id) {
     // Output
     clearQuestionContent(id);
@@ -82,10 +90,21 @@ function radioFieldFunc(id) {
 }
 
 function selectFieldFunc(id) {
+    // Hide the required option
+    const questionDiv = document.getElementById(id);
+    const requiredDiv = questionDiv.querySelector('.required');
+    if (requiredDiv) {
+        requiredDiv.style.display = 'none';
+        updateHiddenInput(id, 2, 'false');
+        const checkbox = requiredDiv.querySelector('input[type=checkbox]');
+        if (checkbox) {
+            checkbox.checked = false; // Ensure the checkbox is unchecked
+        }
+    }
+    
     // Output
     clearQuestionContent(id);
     updateHiddenInput(id, 3, '');
-    const questionDiv = document.getElementById(id);
     const contentDiv = questionDiv.querySelector(`.question-content`);
     const addButton = createElement('button', {}, document.createTextNode('Adicionar opção'));
     addButton.addEventListener('click', () => {
@@ -124,6 +143,9 @@ export function typeFunc(outputId) {
 
     // Update the value of the hidden input
     hiddenInput.value = newValue;
+
+    // Show the required option by default
+    showRequiredOption(questionId);
 
     switch (questionSelectType.value) {
         case 'short-field':

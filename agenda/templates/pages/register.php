@@ -2,10 +2,9 @@
 include_once ("../../utils/base_url.php");
 ?>
 <?php
+require BASE_PATH . 'vendor/autoload.php';
 
 session_start();
-
-require BASE_PATH . 'vendor/autoload.php';
 
 use Dotenv\Dotenv;
 

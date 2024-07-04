@@ -54,6 +54,15 @@ if ($stmt1->rowCount() > 0):
                 <img src="<?= BASE_URL . 'images/cabecalho.jpg' ?>" alt="header">
             </div>
             <div class="form">
+                <div class="create-config">
+                    <i class="fa-solid fa-gear"></i>
+                    <div class="configs">
+                        <div class="period">
+                            <p>Periodicidade das respostas</p>
+                            <select name="period" id="period"></select>
+                        </div>
+                    </div>
+                </div>
                 <div class="create-title create-field">
                     <input placeholder="Titulo do formulario" type="text" name="title" id="title">
                     <textarea class="long-field" placeholder="Descricao do formulario" type="text" name="description"
