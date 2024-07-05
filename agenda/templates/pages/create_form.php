@@ -62,7 +62,9 @@ if ($stmt1->rowCount() > 0):
                             <div>
                                 <p>Unidade de periodizacao</p>
                                 <select type="number" name="period-unit" id="period-unit">
-                                    
+                                    <option value="hora">dia(s)</option>
+                                    <option value="hora">hora(s)</option>
+                                    <option value="hora">minuto(s)</option>
                                 </select>
                             </div>
                             <div>
