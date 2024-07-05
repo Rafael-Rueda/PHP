@@ -47,3 +47,14 @@ export function createElement(tag, attributes, ...children) {
     }
     return element;
 }
+
+export function onlyNumber(input) {
+    // input.addEventListener('keydown', function(event) {
+    //     if (event.key.length === 1 && !/[0-9]/.test(event.key)) {
+    //         event.preventDefault();
+    //     }
+    // });
+    input.addEventListener('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+}

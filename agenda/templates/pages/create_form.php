@@ -61,7 +61,7 @@ if ($stmt1->rowCount() > 0):
                             <h3 class="period-title">Periodicidade</h3>
                             <div>
                                 <p>Unidade de periodizacao</p>
-                                <select type="number" name="period-unit" id="period-unit">
+                                <select class="config-input config-period" type="number" name="period-unit" id="period-unit">
                                     <option value="day">dia(s)</option>
                                     <option value="hour">hora(s)</option>
                                     <option value="minute">minuto(s)</option>
@@ -69,13 +69,11 @@ if ($stmt1->rowCount() > 0):
                             </div>
                             <div>
                                 <p>Periodicidade das respostas</p>
-                                <input type="number" value="0" name="period-value" id="period-value"></input>
+                                <input class="config-input config-period" type="number" value="0" name="period-value" id="period-value"></input>
                             </div>
                             <div>
                                 <p>Campo verificador</p>
-                                <select type="number" name="period-verifier" id="period-verifier">
-
-                                </select>
+                                <select class="config-input config-period" type="number" name="period-verifier" id="period-verifier"></select>
                             </div>
                         </div>
                     </div>

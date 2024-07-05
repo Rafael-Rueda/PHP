@@ -1,8 +1,9 @@
 // IMPORTANT: analyze all the files to have a correct overview of the code
+import { configType } from './form_config.js';
 import { typeFunc } from './question_types.js';
 import { nameFunc } from './question_name.js';
 import { requiredFunc } from './question_required.js';
-import { generateSecureRandomCode, scrollToSmoothly } from '../../utils/utils.js'
+import { generateSecureRandomCode, onlyNumber, scrollToSmoothly } from '../../utils/utils.js'
 
 document.addEventListener("DOMContentLoaded", function () {
     let atualField = 0;
@@ -113,7 +114,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Function to initialize options based on existing hidden inputs
+
+
+    // Form Config
+
+    // Function to initialize options of form config based on existing hidden inputs
     const initializeOptions = (hiddenInput) => {
         const createForm = document.getElementById('create-form');
         const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
@@ -122,11 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
         observeHiddenInput(hiddenInput);
     }
 
-    // Function to add or update an option in the select
+    // Function to add or update an option in the select of form config
     const addOrUpdateOption = (hiddenInput) => {
         const periodVerifier = document.getElementById('period-verifier');
         const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.name}"]`);
-        const value = hiddenInput.value.split(';')[0];
+        const value = hiddenInput.value.split(/(?<!\\);/)[0];
 
         if (existingOption) {
             existingOption.value = value;
@@ -138,6 +143,8 @@ document.addEventListener("DOMContentLoaded", function () {
             option.dataset.id = hiddenInput.name;
             periodVerifier.add(option);
         }
+
+        document.getElementById('period-verifier').setAttribute('value', value);
     }
 
     // Function to observe hidden input changes using MutationObserver
@@ -152,6 +159,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
         observer.observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
     }
+
+    function createConfigChangeListeners() {
+        const createForm = document.getElementById('create-form');
+        const configInputs = document.querySelectorAll('.config-input');
+    
+        // Create this for every new config input >
+        const periodConfigInputs = document.querySelectorAll('.config-period');
+        const configHiddeninput = document.createElement('input');
+        configHiddeninput.type = 'hidden';
+        configHiddeninput.name = 'period';
+        Array.from(periodConfigInputs).forEach((input) => {
+            configHiddeninput.value += `${input.value};`;
+        });
+        createForm.appendChild(configHiddeninput);
+        // < Create this for every new config input
+    
+        const configObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                    configType(mutation.target);
+                }
+            });
+        });
+    
+        Array.from(configInputs).forEach((input) => {
+            // Ensure input has a value attribute to observe
+            if (!input.hasAttribute('value')) {
+                input.setAttribute('value', input.value);
+            }
+    
+            configObserver.observe(input, { attributes: true, attributeFilter: ['value'] });
+    
+            // Update value attribute on input change to trigger MutationObserver
+            input.addEventListener('input', (event) => {
+                event.target.setAttribute('value', event.target.value);
+            });
+        });
+    }
+    
+
+    createConfigChangeListeners();
 
     function createTitleChangeListeners() {
         const titleField = document.querySelector('.create-title');
@@ -323,4 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (old_fields.length > 0) {
         fieldClicked(old_fields[0], 0);
     }
+
+    // Allows user to type only number values in the form options period-value input
+    onlyNumber(document.getElementById('period-value'));
 });
