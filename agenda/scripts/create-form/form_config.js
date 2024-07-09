@@ -24,7 +24,11 @@ function periodUnitType(input) {
 }
 
 function periodValueType(input) {
-    updateHiddenInput('period', 1, input.value);
+    let inputValue = input.value;
+    if (input.value === '-1') {
+        inputValue = '1';
+    }
+    updateHiddenInput('period', 1, inputValue);
 }
 
 function periodVerifierType(input) {

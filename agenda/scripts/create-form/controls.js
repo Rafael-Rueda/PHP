@@ -114,93 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-
-
-    // Form Config
-
-    // Function to initialize options of form config based on existing hidden inputs
-    const initializeOptions = (hiddenInput) => {
-        const createForm = document.getElementById('create-form');
-        const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
-
-        addOrUpdateOption(hiddenInput);
-        observeHiddenInput(hiddenInput);
-    }
-
-    // Function to add or update an option in the select of form config
-    const addOrUpdateOption = (hiddenInput) => {
-        const periodVerifier = document.getElementById('period-verifier');
-        const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.name}"]`);
-        const value = hiddenInput.value.split(/(?<!\\);/)[0];
-
-        if (existingOption) {
-            existingOption.value = value;
-            existingOption.text = value;
-        } else {
-            const option = document.createElement('option');
-            option.value = value;
-            option.text = value;
-            option.dataset.id = hiddenInput.name;
-            periodVerifier.add(option);
-        }
-
-        document.getElementById('period-verifier').setAttribute('value', value);
-    }
-
-    // Function to observe hidden input changes using MutationObserver
-    const observeHiddenInput = (hiddenInput) => {
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
-                    addOrUpdateOption(hiddenInput);
-                }
-            });
-        });
-
-        observer.observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
-    }
-
-    function createConfigChangeListeners() {
-        const createForm = document.getElementById('create-form');
-        const configInputs = document.querySelectorAll('.config-input');
-    
-        // Create this for every new config input >
-        const periodConfigInputs = document.querySelectorAll('.config-period');
-        const configHiddeninput = document.createElement('input');
-        configHiddeninput.type = 'hidden';
-        configHiddeninput.name = 'period';
-        Array.from(periodConfigInputs).forEach((input) => {
-            configHiddeninput.value += `${input.value};`;
-        });
-        createForm.appendChild(configHiddeninput);
-        // < Create this for every new config input
-    
-        const configObserver = new MutationObserver((mutations) => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
-                    configType(mutation.target);
-                }
-            });
-        });
-    
-        Array.from(configInputs).forEach((input) => {
-            // Ensure input has a value attribute to observe
-            if (!input.hasAttribute('value')) {
-                input.setAttribute('value', input.value);
-            }
-    
-            configObserver.observe(input, { attributes: true, attributeFilter: ['value'] });
-    
-            // Update value attribute on input change to trigger MutationObserver
-            input.addEventListener('input', (event) => {
-                event.target.setAttribute('value', event.target.value);
-            });
-        });
-    }
-    
-
-    createConfigChangeListeners();
-
     function createTitleChangeListeners() {
         const titleField = document.querySelector('.create-title');
 
@@ -213,7 +126,11 @@ document.addEventListener("DOMContentLoaded", function () {
             questionHiddenInput.name = 'new-form';
             questionHiddenInput.value = `${titleField.querySelector('#title').value};${titleField.querySelector('#description').value}`;
 
-            createForm.appendChild(questionHiddenInput);
+            if (document.querySelector('input[name=period')) {
+                createForm.insertBefore(questionHiddenInput, document.querySelector('input=[name=period]'));
+            } else {
+                createForm.appendChild(questionHiddenInput);
+            }
         }
 
         hiddenInput = createForm.querySelector('input[name=new-form]');
@@ -371,6 +288,90 @@ document.addEventListener("DOMContentLoaded", function () {
     if (old_fields.length > 0) {
         fieldClicked(old_fields[0], 0);
     }
+
+    // Form Config
+
+    // Function to initialize options of form config based on existing hidden inputs
+    const initializeOptions = (hiddenInput) => {
+        const createForm = document.getElementById('create-form');
+        const hiddenInputs = createForm.querySelectorAll('input[type="hidden"]:not([name="new-form"])');
+
+        addOrUpdateOption(hiddenInput);
+        observeHiddenInput(hiddenInput);
+    }
+
+    // Function to add or update an option in the select of form config
+    const addOrUpdateOption = (hiddenInput) => {
+        const periodVerifier = document.getElementById('period-verifier');
+        const existingOption = periodVerifier.querySelector(`option[data-id="${hiddenInput.name}"]`);
+        const value = hiddenInput.value.split(/(?<!\\);/)[0];
+
+        if (existingOption) {
+            existingOption.value = hiddenInput.name;
+            existingOption.text = value;
+        } else {
+            const option = document.createElement('option');
+            option.value = hiddenInput.name;
+            option.text = value;
+            option.dataset.id = hiddenInput.name;
+            periodVerifier.add(option);
+        }
+
+        document.getElementById('period-verifier').setAttribute('value', value);
+    }
+
+    // Function to observe hidden input changes using MutationObserver
+    const observeHiddenInput = (hiddenInput) => {
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                    addOrUpdateOption(hiddenInput);
+                }
+            });
+        });
+
+        observer.observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
+    }
+
+    function createConfigChangeListeners() {
+        const createForm = document.getElementById('create-form');
+        const configInputs = document.querySelectorAll('.config-input');
+
+        // Create this for every new config input >
+        const periodConfigInputs = document.querySelectorAll('.config-period');
+        const configHiddeninput = document.createElement('input');
+        configHiddeninput.type = 'hidden';
+        configHiddeninput.name = 'period';
+        Array.from(periodConfigInputs).forEach((input) => {
+            configHiddeninput.value += `${input.value};`;
+        });
+        createForm.appendChild(configHiddeninput);
+        // < Create this for every new config input
+
+        const configObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                    configType(mutation.target);
+                }
+            });
+        });
+
+        Array.from(configInputs).forEach((input) => {
+            // Ensure input has a value attribute to observe
+            if (!input.hasAttribute('value')) {
+                input.setAttribute('value', input.value);
+            }
+
+            configObserver.observe(input, { attributes: true, attributeFilter: ['value'] });
+
+            // Update value attribute on input change to trigger MutationObserver
+            input.addEventListener('input', (event) => {
+                event.target.setAttribute('value', event.target.value);
+            });
+        });
+    }
+
+    createConfigChangeListeners();
 
     // Allows user to type only number values in the form options period-value input
     onlyNumber(document.getElementById('period-value'));

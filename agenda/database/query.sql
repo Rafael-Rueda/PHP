@@ -16,32 +16,34 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Forms, Questions and Answers
 
-CREATE TABLE forms (
+CREATE TABLE IF NOT EXISTS forms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     description TEXT,
-    owner INT
+    owner INT NOT NULL
 );
 
-CREATE TABLE questions (
+CREATE TABLE IF NOT EXISTS questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fk_forms_id INT,
     content TEXT,
     type VARCHAR(255),
     required BOOLEAN,
-    question_order INT
+    question_order INT,
+    hash VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE questions_options (
+CREATE TABLE IF NOT EXISTS questions_options (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fk_questions_id INT,
     content TEXT
 );
 
-CREATE TABLE answers (
+CREATE TABLE IF NOT EXISTS answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fk_questions_id INT,
-    content TEXT
+    content TEXT,
+    created_at DATETIME
 );
 
 ALTER TABLE forms ADD CONSTRAINT FK_forms_owner
@@ -63,3 +65,14 @@ ALTER TABLE answers ADD CONSTRAINT FK_answers_2
     FOREIGN KEY (fk_questions_id)
     REFERENCES questions (id)
     ON DELETE CASCADE;
+
+-- Periodicity
+
+CREATE TABLE IF NOT EXISTS periodicity (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fk_forms_id INT,
+    quantity INT,
+    field VARCHAR(255),
+    FOREIGN KEY (fk_forms_id) REFERENCES forms(id) ON DELETE CASCADE,
+    FOREIGN KEY (field) REFERENCES questions(hash) ON DELETE CASCADE
+);

@@ -55,13 +55,14 @@ if ($stmt1->rowCount() > 0):
             </div>
             <div class="form">
                 <div class="create-config">
-                    <i class="fa-solid fa-gear"></i>
-                    <div class="configs">
+                    <i class="fa-solid fa-gear" id="gear-icon"></i>
+                    <div class="configs" id="form-configs">
                         <div class="period">
                             <h3 class="period-title">Periodicidade</h3>
                             <div>
                                 <p>Unidade de periodizacao</p>
-                                <select class="config-input config-period" type="number" name="period-unit" id="period-unit">
+                                <select class="config-input config-period" type="number" name="period-unit"
+                                    id="period-unit">
                                     <option value="day">dia(s)</option>
                                     <option value="hour">hora(s)</option>
                                     <option value="minute">minuto(s)</option>
@@ -69,11 +70,13 @@ if ($stmt1->rowCount() > 0):
                             </div>
                             <div>
                                 <p>Periodicidade das respostas</p>
-                                <input class="config-input config-period" type="number" value="0" name="period-value" id="period-value"></input>
+                                <input class="config-input config-period" type="number" value="0" name="period-value"
+                                    id="period-value"></input>
                             </div>
                             <div>
                                 <p>Campo verificador</p>
-                                <select class="config-input config-period" type="number" name="period-verifier" id="period-verifier"></select>
+                                <select class="config-input config-period" type="number" name="period-verifier"
+                                    id="period-verifier"></select>
                             </div>
                         </div>
                     </div>
@@ -107,6 +110,16 @@ if ($stmt1->rowCount() > 0):
             <?php include_once (BASE_PATH . 'templates/partials/controls.php'); ?>
         </div>
         <script type="module" src="<?= BASE_URL . 'scripts/create-form/controls.js' ?>"></script>
+        <script>
+            document.getElementById('gear-icon').addEventListener('click', function () {
+                const configOptions = document.getElementById('form-configs');
+                if (configOptions.style.display === 'none' || configOptions.style.display === '') {
+                    configOptions.style.display = 'grid';
+                } else {
+                    configOptions.style.display = 'none';
+                }
+            });
+        </script>
     </body>
 
     </html>

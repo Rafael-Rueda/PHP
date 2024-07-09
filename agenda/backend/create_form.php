@@ -47,9 +47,9 @@ try {
 
         // Prepare statements for inserting data
         $formStmt = $conn->prepare('INSERT INTO forms (name, description, owner) VALUES (:name, :description, :owner)');
-        $questionStmt = $conn->prepare('INSERT INTO questions (fk_forms_id, content, type, required, question_order) VALUES (:fk_forms_id, :content, :type, :required, :order)');
+        $questionStmt = $conn->prepare('INSERT INTO questions (fk_forms_id, content, type, required, question_order, hash) VALUES (:fk_forms_id, :content, :type, :required, :order, :hash)');
         $optionsStmt = $conn->prepare('INSERT INTO questions_options (fk_questions_id, content) VALUES (:fk_questions_id, :content)');
-
+        $periodicityStmt = $conn->prepare('INSERT INTO periodicity (fk_forms_id, quantity, field) VALUES (:fk_forms_id, :quantity, :field)');
         $formId = '';
 
         $count_order = 0;
@@ -66,6 +66,19 @@ try {
                 $formStmt->execute([':name' => $name, ':description' => $description, ':owner' => $owner]);
                 $formId = $conn->lastInsertId();
                 //echo "Inserted form ID: $formId<br>";
+            } elseif ($key == 'period') {
+                list($unit, $time, $field) = explode(';', $value);
+                $quantity = 0;
+                if ($unit == 'minute') {
+                    $quantity = 60 * $time; // In seconds
+                } elseif ($unit == 'hour') {
+                    $quantity = 3600 * $time; // In seconds
+                } elseif ($unit == 'day') {
+                    $quantity = 86400 * $time; // In seconds
+                }
+
+                $periodicityStmt->execute([':fk_forms_id' => $formId, ':quantity' => $quantity, ':field' => $field]);
+
             } else {
                 // Parse question data
                 $parts = splitUnescapedSemicolons($value);
@@ -75,12 +88,13 @@ try {
                 $required = $parts[2] === 'true' ? 1 : 0;
                 $options = isset($parts[3]) ? splitUnescapedHyphens($parts[3]) : '';
                 $order = $count_order;
+                $hash = $key;
 
                 // Debugging output
                 // echo "Inserting question: Form ID = $formId, Content = $content, Type = $type, Required = $required, Options = $options<br>";
 
                 // Insert question data
-                $questionStmt->execute([':fk_forms_id' => $formId, ':content' => $content, ':type' => $type, ':required' => $required, 'order' => $order]);
+                $questionStmt->execute([':fk_forms_id' => $formId, ':content' => $content, ':type' => $type, ':required' => $required, ':order' => $order, ':hash' => $hash]);
                 $questionId = $conn->lastInsertId();
                 // echo "Inserted question ID: $questionId<br>";
 
