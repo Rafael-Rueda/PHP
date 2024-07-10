@@ -1,5 +1,19 @@
 <?php
 
+include_once ('../utils/base_url.php');
+include_once (BASE_PATH . 'backend/flash_messages.php');
+
+session_start();
+
+date_default_timezone_set('America/Sao_Paulo');
+
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
 function getIdFromName($questionName)
 {
     $parts = explode('-', $questionName);
@@ -27,17 +41,6 @@ function getContentFromPost($postValue)
     }
     return $returnValue;
 }
-
-include_once ('../utils/base_url.php');
-
-date_default_timezone_set('America/Sao_Paulo');
-
-require BASE_PATH . 'vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(BASE_PATH);
-$dotenv->load();
 
 $db_dsn = $_ENV['DB_DSN'];
 $db_username = $_ENV['DB_USERNAME'];
@@ -115,7 +118,9 @@ try {
                     echo "Future Time (datetime): " . $futureTime->format('Y-m-d H:i:s') . "<br>";
     
                     if ($now <= $futureTime) {
-                        header('Location: ' . BASE_URL . 'index.php');
+                        // set_flash_message('Nao foi possivel responder esse formulario. Voce so podera responde-lo novamente a partir de ' . $futureTime, 'error');
+                        test('aaa');
+                        // header('Location: ' . BASE_URL . 'index.php');
                         exit;
                     }
                 }

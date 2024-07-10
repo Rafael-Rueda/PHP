@@ -19,6 +19,7 @@ include_once ("./utils/base_url.php");
 
 <body>
     <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
+    <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php');?>
     <?php
 
     require BASE_PATH . 'vendor/autoload.php';
