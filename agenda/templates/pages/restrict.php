@@ -41,10 +41,13 @@ if ($stmt1->rowCount() > 0):
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/restrict.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/flash_messages.css' ?>">
     </head>
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
+        <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php'); ?>
+        
         <a class="create-form-link" href="<?= BASE_URL . 'templates/pages/create_form.php' ?>">Criar novo formulario</a>
         <div class="forms">
             <?php

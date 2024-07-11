@@ -42,6 +42,7 @@ if ($stmt1->rowCount() > 0):
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/create_form.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/flash_messages.css' ?>">
 
         <!-- script -->
         <script src="https://kit.fontawesome.com/b559fbf78d.js" crossorigin="anonymous"></script>
@@ -49,6 +50,8 @@ if ($stmt1->rowCount() > 0):
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
+        <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php'); ?>
+        
         <div class="create-form">
             <div class="create-img">
                 <img src="<?= BASE_URL . 'images/cabecalho.jpg' ?>" alt="header">

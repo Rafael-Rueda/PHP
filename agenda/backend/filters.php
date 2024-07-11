@@ -31,8 +31,10 @@ if (isset($_GET['question']) && isset($_GET['form']) && $_GET['question'] != '')
         exit();
     }
 
-    $answerContent = '%' . $_GET['answer'] . '%';
-    $answerStmt = $conn->prepare('SELECT * FROM answers WHERE fk_questions_id = :question_id AND content LIKE :answer_content');
+    $answerContent = '%' . strval($_GET['answer']) . '%';
+    // $operator = is_numeric($_GET['answer']) ? '=' : 'LIKE';
+
+    $answerStmt = $conn->prepare("SELECT * FROM answers WHERE fk_questions_id = :question_id AND content LIKE :answer_content");
     $answerStmt->bindParam(':question_id', $question_id);
     $answerStmt->bindParam(':answer_content', $answerContent);
     $answerStmt->execute();
@@ -74,7 +76,7 @@ if (isset($_GET['question']) && isset($_GET['form']) && $_GET['question'] != '')
             $counter++;
         }
 
-        foreach(array_reverse($appendOrderedAnswers) as $orderedAnswer) {
+        foreach (array_reverse($appendOrderedAnswers) as $orderedAnswer) {
             array_push($appendAnswers, $orderedAnswer);
         }
 

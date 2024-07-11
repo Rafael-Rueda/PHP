@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include_once ('../utils/base_url.php');
 include_once (BASE_PATH . 'backend/flash_messages.php');
 
@@ -93,10 +97,12 @@ try {
     
         if ($question['hash'] == $periodicity['field']) {
             foreach ($answersForQuestion as $answer) {
-                echo ("CONTENT = " . $content);
-                echo "<br/><br/>";
-                echo ("ANSWER CONTENT = " . $answer['content']);
-                echo "<br/><br/>";
+                // For debug propouses
+
+                // echo ("CONTENT = " . $content);
+                // echo "<br/><br/>";
+                // echo ("ANSWER CONTENT = " . $answer['content']);
+                // echo "<br/><br/>";
                 if ($content == $answer['content']) {
                     $createdAt = new DateTime($answer['created_at']);
                     $intervalSpec = sprintf('PT%dS', $periodicity['quantity']);
@@ -104,6 +110,8 @@ try {
                     $futureTime = clone $createdAt;
                     $futureTime->add($add_time);
     
+                    // For debug propouses
+
                     // $nowInSeconds = $now->getTimestamp();
                     // $createdAtInSeconds = $createdAt->getTimestamp();
                     // $futureTimeInSeconds = $futureTime->getTimestamp();
@@ -112,15 +120,14 @@ try {
                     // echo "Created At (seconds): " . $createdAtInSeconds . "<br>";
                     // echo "Interval (seconds): " . $periodicity['quantity'] . "<br>";
                     // echo "Future Time (seconds): " . $futureTimeInSeconds . "<br>";
-    
-                    echo "Now (datetime): " . $now->format('Y-m-d H:i:s') . "<br>";
-                    echo "Created At (datetime): " . $createdAt->format('Y-m-d H:i:s') . "<br>";
-                    echo "Future Time (datetime): " . $futureTime->format('Y-m-d H:i:s') . "<br>";
+                    
+                    // echo "Now (datetime): " . $now->format('Y-m-d H:i:s') . "<br>";
+                    // echo "Created At (datetime): " . $createdAt->format('Y-m-d H:i:s') . "<br>";
+                    // echo "Future Time (datetime): " . $futureTime->format('Y-m-d H:i:s') . "<br>";
     
                     if ($now <= $futureTime) {
-                        // set_flash_message('Nao foi possivel responder esse formulario. Voce so podera responde-lo novamente a partir de ' . $futureTime, 'error');
-                        test('aaa');
-                        // header('Location: ' . BASE_URL . 'index.php');
+                        set_flash_message('Nao foi possivel responder esse formulario. Voce so podera responde-lo novamente a partir de ' . $futureTime->format('d/m/Y H:i:s'), 'error');
+                        header('Location: ' . BASE_URL . 'index.php');
                         exit;
                     }
                 }
@@ -133,6 +140,9 @@ try {
 
     // Commit the transaction
     $conn->commit();
+
+    // Flash message
+    set_flash_message('Resposta cadastrada com sucesso.', 'success');
 
     // Redirect after a short delay for debugging purposes
     header('Location: ' . BASE_URL . 'index.php');

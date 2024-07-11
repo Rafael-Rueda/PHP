@@ -39,10 +39,12 @@ if ($stmt->rowCount() > 0):
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/footer.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/flash_messages.css' ?>">
 </head>
 
 <body>
     <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
+    <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php'); ?>
 
     <div class="bodyform">
         <form method="POST" action="<?= BASE_URL . 'backend/register.php' ?>">

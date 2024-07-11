@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-include_once('../utils/base_url.php');
+include_once ('../utils/base_url.php');
+include_once (BASE_PATH . 'backend/flash_messages.php');
 
 session_start();
 
@@ -14,10 +15,10 @@ function generateToken($length = 32)
 {
     // Gera uma string aleatória
     $randomString = openssl_random_pseudo_bytes($length);
-    
+
     // Converte a string aleatória para hexadecimal
     $token = bin2hex($randomString);
-    
+
     return $token;
 }
 
@@ -49,13 +50,20 @@ if ($stmt->rowCount() > 0) {
 
         $_SESSION['access_token'] = $access_token;
 
+        // Flash message
+        set_flash_message('Login efetuado com sucesso.', 'success');
+
         header('Location: ' . BASE_URL . 'index.php');
     } else {
-        echo "Senha incorreta.";
+        // Flash message
+        set_flash_message('Senha incorreta.', 'error');
+
         header('Location: ' . BASE_URL . 'templates/pages/login.php');
     }
 } else {
-    echo "Usuário não encontrado.";
+    // Flash message
+    set_flash_message('Usuário não encontrado.', 'error');
+
     header('Location: ' . BASE_URL . 'templates/pages/login.php');
 }
 

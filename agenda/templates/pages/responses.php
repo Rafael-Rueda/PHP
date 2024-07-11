@@ -119,6 +119,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/header.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">
         <link rel="stylesheet" href="<?= BASE_URL . 'styles/responses.css' ?>">
+        <link rel="stylesheet" href="<?= BASE_URL . 'styles/flash_messages.css' ?>">
 
         <!-- script -->
         <script src="https://kit.fontawesome.com/b559fbf78d.js" crossorigin="anonymous"></script>
@@ -126,6 +127,8 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
 
     <body>
         <?php include_once (BASE_PATH . 'templates/partials/header.php') ?>
+        <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php'); ?>
+        
         <div class="filter-container">
             <button id="toggle-filters">
                 <span id="arrow">&#9654;</span> Filtros
@@ -237,7 +240,11 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 console.log(data);
 
                 // Clear all the answers
-                document.querySelector('.answer').remove();            
+                if (document.querySelectorAll('.answer')) {
+                    Array.from(document.querySelectorAll('.answer')).forEach(el => {
+                        el.remove();
+                    });
+                }
 
                 data.forEach((answer) => {
                     const answerContainer = document.createElement('div');

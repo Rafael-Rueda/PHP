@@ -10,7 +10,7 @@ display_flash_message();
         if (flashMessage) {
             setTimeout(() => {
                 flashMessage.style.display = 'none';
-            }, 5000); // 5 segundos
+            }, 10000);
         }
     });
 </script>

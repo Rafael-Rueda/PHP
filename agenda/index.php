@@ -15,11 +15,12 @@ include_once ("./utils/base_url.php");
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/footer.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/forms.css' ?>">
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/form_list.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_URL . 'styles/flash_messages.css' ?>">
 </head>
 
 <body>
     <?php include_once (BASE_PATH . 'templates/partials/header.php'); ?>
-    <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php');?>
+    <?php include_once (BASE_PATH . 'templates/partials/flash_messages.php'); ?>
     <?php
 
     require BASE_PATH . 'vendor/autoload.php';

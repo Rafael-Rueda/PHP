@@ -1,4 +1,17 @@
 <?php
+
+include_once ('../utils/base_url.php');
+include_once (BASE_PATH . 'backend/flash_messages.php');
+
+require BASE_PATH . 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_PATH);
+$dotenv->load();
+
+session_start();
+
 function splitUnescapedSemicolons($string)
 {
     $parts = preg_split('/(?<!\\\\);/', $string);
@@ -14,17 +27,6 @@ function splitUnescapedHyphens($string)
         return str_replace('\-', '-', $part);
     }, $parts);
 }
-
-include_once ('../utils/base_url.php');
-
-require BASE_PATH . 'vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(BASE_PATH);
-$dotenv->load();
-
-session_start();
 
 $db_dsn = $_ENV['DB_DSN'];
 $db_username = $_ENV['DB_USERNAME'];
@@ -112,10 +114,14 @@ try {
         $conn->commit();
         // echo "Transaction committed.<br>";
 
-        // Redirect after a short delay for debugging purposes
+        // Flash message
+        set_flash_message('Formulario criado com sucesso.', 'success');
+
+        // Redirect
         header('Location: ' . BASE_URL . 'index.php');
     } else {
-        echo "User not found or session expired.<br>";
+        // Flash message
+        set_flash_message('Usuario nao encontrado ou sessao expirada.', 'error');
     }
 } catch (PDOException $e) {
     // Roll back the transaction if something failed
