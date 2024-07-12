@@ -3,6 +3,8 @@ include_once ("../../utils/base_url.php");
 ?>
 <?php
 
+error_reporting(0);
+
 require BASE_PATH . 'vendor/autoload.php';
 
 use Dotenv\Dotenv;

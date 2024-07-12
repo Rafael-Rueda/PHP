@@ -1,5 +1,6 @@
 <?php
 include_once ("../../utils/base_url.php");
+error_reporting(0);
 ?>
 
 <!DOCTYPE html>
