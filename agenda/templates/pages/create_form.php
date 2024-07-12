@@ -63,7 +63,7 @@ if ($stmt1->rowCount() > 0):
                         <div class="period">
                             <h3 class="period-title">Periodicidade</h3>
                             <div>
-                                <p>Unidade de periodizacao</p>
+                                <p>Unidade de periodicidade</p>
                                 <select class="config-input config-period" type="number" name="period-unit"
                                     id="period-unit">
                                     <option value="day">dia(s)</option>

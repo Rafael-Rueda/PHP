@@ -1,14 +1,16 @@
 .form-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px;
     padding: 16px;
     margin: 16px;
 }
 
 .form-item {
-    background-color: var(--primary-color);
+    background-color: var(--question-bg-color);
     border-radius: 8px;
+    border-bottom: 8px solid var(--primary-color);
+    border-right: 8px solid var(--primary-color);
     padding: 16px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -16,10 +18,10 @@
 }
 .form-title h2 {
     margin: 0;
-    color: var(--text-color);
+    color: var(--primary-color);
 }
 .form-description p, .form-number-questions p {
-    color: var(--text-color);
+    color: var(--primary-color);
 }
 .form-number-questions p {
     padding: 10px;
@@ -34,6 +36,30 @@
     width: 100%;
     justify-content: center;
     grid-column: span 10;
+}
+
+.form-image {
+    padding: 16px 64px;
+}
+.form-image-input {
+    display: flex;
+    margin-top: 24px;
+    align-items: center;
+    gap: 16px;
+}
+.form-image-input .dot-form {
+    border-radius: 50%;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-color);
+}
+.form-image-input .line-form {
+    border-radius: 8px;
+    display: inline-block;
+    width: 100%;
+    height: 4px;
+    background-color: var(--primary-color);
 }
 
 @media screen and (max-width: 600px) {

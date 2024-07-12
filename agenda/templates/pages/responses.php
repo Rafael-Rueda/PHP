@@ -206,7 +206,9 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
             <button><i class="fa-solid fa-file-word"></i> Gerar Google Docs</button>
         </div>
 
-        <script>
+        <script type="module">
+            import { encodeQueryString } from "<?= BASE_URL . 'utils/utils.js' ?>"
+
             document.addEventListener('DOMContentLoaded', () => {
                 const filtersDiv = document.querySelector('.filters');
                 const submitButton = filtersDiv.querySelector('button#filter-submit');
@@ -226,7 +228,7 @@ if ($stmt1->rowCount() > 0 && isset($_GET) && userOwnsForm($formsOwned, $form_id
                 });
 
                 submitButton.addEventListener('click', () => {
-                    const url = `<?= BASE_URL . 'backend/filters.php' ?>?question=${question}&form=${form}&answer=${answer}`;
+                    const url = `<?= BASE_URL . 'backend/filters.php' ?>?question=${encodeQueryString(question)}&form=${form}&answer=${encodeQueryString(answer)}`;
                     fetch(url)
                         .then((response) => response.json())
                         .then((data) => {

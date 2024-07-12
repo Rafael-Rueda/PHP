@@ -3,6 +3,10 @@
 include_once ("../utils/base_url.php");
 require BASE_PATH . 'vendor/autoload.php';
 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(BASE_PATH);
@@ -24,7 +28,7 @@ if (isset($_GET['question']) && isset($_GET['form']) && $_GET['question'] != '')
     $questionStmt->execute();
 
     $question = $questionStmt->fetch(PDO::FETCH_ASSOC);
-    if (count($question) > 0) {
+    if ($questionStmt->rowCount() > 0) {
         $question_id = $question['id'];
     } else {
         echo json_encode(['error' => 'Question not found']);
@@ -38,6 +42,8 @@ if (isset($_GET['question']) && isset($_GET['form']) && $_GET['question'] != '')
     $answerStmt->bindParam(':question_id', $question_id);
     $answerStmt->bindParam(':answer_content', $answerContent);
     $answerStmt->execute();
+
+    // print_r($answerStmt->errorInfo());
 
     $answer = $answerStmt->fetchAll(PDO::FETCH_ASSOC);
 

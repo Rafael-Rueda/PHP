@@ -58,3 +58,40 @@ export function onlyNumber(input) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 }
+
+export function encodeQueryString(query) {
+    const replacements = {
+        ' ': '%20',
+        '"': '%22',
+        '#': '%23',
+        '$': '%24',
+        '%': '%25',
+        '&': '%26',
+        '\'': '%27',
+        '(': '%28',
+        ')': '%29',
+        '*': '%2A',
+        '+': '%2B',
+        ',': '%2C',
+        '/': '%2F',
+        ':': '%3A',
+        ';': '%3B',
+        '<': '%3C',
+        '=': '%3D',
+        '>': '%3E',
+        '?': '%3F',
+        '@': '%40',
+        '[': '%5B',
+        '\\': '%5C',
+        ']': '%5D',
+        '^': '%5E',
+        '_': '%5F',
+        '`': '%60',
+        '{': '%7B',
+        '|': '%7C',
+        '}': '%7D',
+        '~': '%7E'
+    };
+
+    return query.split('').map(char => replacements[char] || char).join('');
+}

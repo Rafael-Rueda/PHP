@@ -52,6 +52,14 @@ include_once ("./utils/base_url.php");
                 <div class="form-description">
                     <p><?= $form['description'] ?></p>
                 </div>
+                <div class="form-image">
+                    <?php for ($c = 0; $c < 5; $c++): ?>
+                        <div class="form-image-input">
+                            <span class="dot-form"></span>
+                            <span class="line-form"></span>
+                        </div>
+                    <?php endfor; ?>
+                </div>
                 <div class="form-number-questions">
                     <p><?php
                     $questionsFormStmt = $conn->prepare('SELECT * FROM questions WHERE fk_forms_id = :id_form');
