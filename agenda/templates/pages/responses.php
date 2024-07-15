@@ -4,6 +4,7 @@ include_once ("../../utils/base_url.php");
 <?php
 
 session_start();
+error_reporting(0);
 
 function userOwnsForm($formsOwned, $formId)
 {

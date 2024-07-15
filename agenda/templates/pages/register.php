@@ -5,6 +5,7 @@ include_once ("../../utils/base_url.php");
 require BASE_PATH . 'vendor/autoload.php';
 
 session_start();
+error_reporting(0);
 
 use Dotenv\Dotenv;
 
