@@ -126,6 +126,12 @@ function selectFieldFunc(id) {
     contentDiv.appendChild(addButton);
 }
 
+function cpfFieldFunc(id) {
+    // Output
+    clearQuestionContent(id);
+    updateHiddenInput(id, 3, '');
+}
+
 export function typeFunc(outputId) {
     const questionId = outputId.split("-")[0];
     const questionSelectType = document.getElementById(outputId);
@@ -159,6 +165,9 @@ export function typeFunc(outputId) {
             break;
         case 'select-field':
             selectFieldFunc(questionId);
+            break;
+        case 'cpf-field':
+            cpfFieldFunc(questionId);
             break;
         default:
             break;

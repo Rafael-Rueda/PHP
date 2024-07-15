@@ -184,7 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
             { value: 'short-field', text: 'Campo de texto curto' },
             { value: 'long-field', text: 'Campo de texto longo' },
             { value: 'radio-field', text: 'Campo de escolha' },
-            { value: 'select-field', text: 'Campo de multipla escolha' }
+            { value: 'select-field', text: 'Campo de multipla escolha' },
+            { value: 'cpf-field', text: 'Campo de CPF'}
         ];
         options.forEach(option => {
             const optionElement = document.createElement('option');

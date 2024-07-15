@@ -95,3 +95,9 @@ export function encodeQueryString(query) {
 
     return query.split('').map(char => replacements[char] || char).join('');
 }
+
+export function validateCpf(input, form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+    })
+}
