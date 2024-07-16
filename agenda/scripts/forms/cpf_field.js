@@ -16,8 +16,6 @@ export function cpfField(question, label) {
         }
     });
 
-    
-
     document.getElementById('answering-form').addEventListener('submit', (e) => {
         if (!validator(String(questionInput.value))) {
             e.preventDefault();
@@ -34,6 +32,15 @@ export function cpfField(question, label) {
     } else {
         label.classList.add('hide-after');
     }
+
+    document.getElementById('answering-form').addEventListener('submit', (e) => {
+        if (question.required && question.value == '') {
+            e.preventDefault();
+            showFieldError("Preencha este campo obrigatorio !", questionInput);
+        } else if (question.required) {
+            clearFieldErrors(questionInput);
+        }
+    });
 
     return questionInput;
 }

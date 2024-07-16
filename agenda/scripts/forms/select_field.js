@@ -1,3 +1,5 @@
+import { clearFieldErrors, showFieldError } from './field_error.js';
+
 export function selectField(question, label) {
     let questionInput = null;
     questionInput = document.createElement('div');
@@ -27,6 +29,15 @@ export function selectField(question, label) {
         sqField.appendChild(checkboxInput);
         sqField.appendChild(checkboxLabel);
         questionInput.appendChild(sqField);
+    });
+
+    document.getElementById('answering-form').addEventListener('submit', (e) => {
+        if (question.required && question.value == '') {
+            e.preventDefault();
+            showFieldError("Preencha este campo obrigatorio !", questionInput);
+        } else if (question.required) {
+            clearFieldErrors(questionInput);
+        }
     });
 
     return questionInput;

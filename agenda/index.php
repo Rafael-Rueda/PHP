@@ -176,7 +176,7 @@ include_once ("./utils/base_url.php");
                                 formElement.addEventListener('submit', (e) => {
                                     e.preventDefault();
                                     if (!checkFieldErrors()) {
-                                        document.getElementById('answering-form').submit();
+                                        // document.getElementById('answering-form').submit();
                                     }
                                 });
                             });

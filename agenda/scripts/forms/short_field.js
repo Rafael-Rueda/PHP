@@ -1,3 +1,5 @@
+import { clearFieldErrors, showFieldError } from './field_error.js';
+
 export function shortField(question, label) {
     let questionInput = null;
     questionInput = document.createElement('input');
@@ -6,12 +8,20 @@ export function shortField(question, label) {
     questionInput.id = `question-${question.id}`;
     questionInput.name = `question-${question.id}`;
     questionInput.placeholder = 'Sua resposta';
-
     if (parseInt(question.required)) {
         questionInput.required = true;
     } else {
         label.classList.add('hide-after');
     }
+
+    document.getElementById('answering-form').addEventListener('submit', (e) => {
+        if (question.required && question.value == '') {
+            e.preventDefault();
+            showFieldError("Preencha este campo obrigatorio !", questionInput);
+        } else if (question.required) {
+            clearFieldErrors(questionInput);
+        }
+    });
     
     return questionInput;
 }

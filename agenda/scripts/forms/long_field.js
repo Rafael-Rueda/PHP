@@ -1,3 +1,5 @@
+import { clearFieldErrors, showFieldError } from './field_error.js';
+
 export function longField(question, label) {
     let questionInput = null;
     questionInput = document.createElement('textarea');
@@ -10,6 +12,15 @@ export function longField(question, label) {
     } else {
         label.classList.add('hide-after');
     }
+
+    document.getElementById('answering-form').addEventListener('submit', (e) => {
+        if (question.required && question.value == '') {
+            e.preventDefault();
+            showFieldError("Preencha este campo obrigatorio !", questionInput);
+        } else if (question.required) {
+            clearFieldErrors(questionInput);
+        }
+    });
 
     return questionInput;
 }
