@@ -16,15 +16,6 @@ export function cpfField(question, label) {
         }
     });
 
-    document.getElementById('answering-form').addEventListener('submit', (e) => {
-        if (!validator(String(questionInput.value))) {
-            e.preventDefault();
-            showFieldError("Digite um CPF valido !", questionInput);
-        } else {
-            clearFieldErrors(questionInput);
-        }
-    })
-
     onlyNumber(questionInput);
 
     if (parseInt(question.required)) {
@@ -33,12 +24,38 @@ export function cpfField(question, label) {
         label.classList.add('hide-after');
     }
 
+    // Validation
+
     document.getElementById('answering-form').addEventListener('submit', (e) => {
-        if (question.required && question.value == '') {
-            e.preventDefault();
-            showFieldError("Preencha este campo obrigatorio !", questionInput);
-        } else if (question.required) {
-            clearFieldErrors(questionInput);
+        if (!questionInput.value) {
+            if (question.required) {
+                e.preventDefault();
+                showFieldError("Preencha este campo obrigatório !", questionInput);
+            } else {
+                if (!validator(String(questionInput.value))) {
+                    e.preventDefault();
+                    showFieldError("Digite um CPF valido !", questionInput);
+                } else {
+                    clearFieldErrors(questionInput);
+                }
+            }
+        } else {
+            if (question.required) {
+                clearFieldErrors(questionInput);
+                if (!validator(String(questionInput.value))) {
+                    e.preventDefault();
+                    showFieldError("Digite um CPF valido !", questionInput);
+                } else {
+                    clearFieldErrors(questionInput);
+                }
+            } else {
+                if (!validator(String(questionInput.value))) {
+                    e.preventDefault();
+                    showFieldError("Digite um CPF valido !", questionInput);
+                } else {
+                    clearFieldErrors(questionInput);
+                }
+            }
         }
     });
 

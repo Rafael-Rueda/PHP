@@ -12,10 +12,14 @@ export function clearFieldErrors(input) {
 
 export function checkFieldErrors() {
     const inputs = document.getElementsByClassName('input-error');
+    let hasError = false;
     for (let input of inputs) {
         if (input.textContent !== '') {
-            return true;
+            hasError = true;
         }
+    }
+    if (hasError) {
+        return true;
     }
     return false;
 }

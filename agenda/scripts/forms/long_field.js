@@ -13,8 +13,10 @@ export function longField(question, label) {
         label.classList.add('hide-after');
     }
 
+    // Validation
+    
     document.getElementById('answering-form').addEventListener('submit', (e) => {
-        if (question.required && question.value == '') {
+        if (question.required && !questionInput.value) {
             e.preventDefault();
             showFieldError("Preencha este campo obrigatorio !", questionInput);
         } else if (question.required) {

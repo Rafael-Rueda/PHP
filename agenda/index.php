@@ -172,13 +172,13 @@ include_once ("./utils/base_url.php");
                                 formElement.appendChild(questionDiv);
 
                                 createFieldError(questionInput);
+                            });
 
-                                formElement.addEventListener('submit', (e) => {
-                                    e.preventDefault();
-                                    if (!checkFieldErrors()) {
-                                        // document.getElementById('answering-form').submit();
-                                    }
-                                });
+                            formElement.addEventListener('submit', (e) => {
+                                e.preventDefault();
+                                if (!checkFieldErrors()) {
+                                    document.getElementById('answering-form').submit();
+                                }
                             });
 
                             const submitDiv = document.createElement('div');
@@ -221,7 +221,7 @@ include_once ("./utils/base_url.php");
             </div>
         </form>
     </div> -->
-    <script src="<?= BASE_URL . 'scripts/expand_field.js' ?>"></script>
+    <script type="module" src="<?= BASE_URL . 'scripts/create-form/expand_field.js' ?>"></script>
 </body>
 
 </html>

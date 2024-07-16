@@ -100,6 +100,10 @@ export function validator(cpf) {
 
     cpf = String(cpf).replace(/[^\d]+/g, '');
 
+    if (!cpf) {
+        return true;
+    }
+
     if (cpf.length !== 11) {
         return false;
     }

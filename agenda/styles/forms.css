@@ -107,6 +107,17 @@
     content: '' !important;
 }
 
+input.cpf-field::-webkit-outer-spin-button,
+input.cpf-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input.cpf-field[type=number] {
+    appearance: textfield;
+    -moz-appearance:textfield; /* Firefox */
+}
+
 @media screen and (max-width: 1250px) {
     .question {
         width: 500px;
