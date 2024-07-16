@@ -54,7 +54,7 @@ export function onlyNumber(input) {
     //         event.preventDefault();
     //     }
     // });
-    input.addEventListener('input', function(event) {
+    input.addEventListener('input', function (event) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 }
@@ -96,8 +96,56 @@ export function encodeQueryString(query) {
     return query.split('').map(char => replacements[char] || char).join('');
 }
 
-export function validateCpf(input, form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-    })
+export function validator(cpf) {
+
+    cpf = String(cpf).replace(/[^\d]+/g, '');
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    const blacklist = [
+        '11111111111',
+        '22222222222',
+        '33333333333',
+        '44444444444',
+        '55555555555',
+        '66666666666',
+        '77777777777',
+        '88888888888',
+        '99999999999',
+        '00000000000'
+    ]
+
+    if (blacklist.includes(cpf)) {
+        return false;
+    }
+
+    // Validate first digit
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+        sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let firstCheckDigit = 11 - (sum % 11);
+    if (firstCheckDigit === 10 || firstCheckDigit === 11) {
+        firstCheckDigit = 0;
+    }
+    if (firstCheckDigit !== parseInt(cpf.charAt(9))) {
+        return false;
+    }
+
+    // Validate second digit
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+        sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let secondCheckDigit = 11 - (sum % 11);
+    if (secondCheckDigit === 10 || secondCheckDigit === 11) {
+        secondCheckDigit = 0;
+    }
+    if (secondCheckDigit !== parseInt(cpf.charAt(10))) {
+        return false;
+    }
+
+    return true;
 }

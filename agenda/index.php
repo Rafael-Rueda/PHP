@@ -81,7 +81,7 @@ include_once ("./utils/base_url.php");
         import { longField } from "<?= BASE_URL . 'scripts/forms/long_field.js' ?>";
         import { shortField } from "<?= BASE_URL . 'scripts/forms/short_field.js' ?>";
         import { cpfField } from "<?= BASE_URL . 'scripts/forms/cpf_field.js' ?>";
-        // import { validateCpf } from "<?= BASE_URL . 'utils/utils.js' ?>";
+        import { createFieldError, clearFieldErrors, checkFieldErrors } from "<?= BASE_URL . 'scripts/forms/field_error.js' ?>";
 
         document.addEventListener('DOMContentLoaded', function () {
             const formList = document.getElementById('form-list');
@@ -125,6 +125,7 @@ include_once ("./utils/base_url.php");
                             formElement.method = 'POST';
                             formElement.action = '<?= BASE_URL . 'backend/answer_form.php' ?>';
                             formElement.id = 'answering-form';
+                            formElement.setAttribute('novalidate', true);
 
                             formContainer.appendChild(formElement);
                             document.body.appendChild(formContainer);
@@ -170,9 +171,14 @@ include_once ("./utils/base_url.php");
                                 questionDiv.appendChild(questionInput);
                                 formElement.appendChild(questionDiv);
 
-                                // if (question.type === 'cpf-field') {
-                                    
-                                // }
+                                createFieldError(questionInput);
+
+                                formElement.addEventListener('submit', (e) => {
+                                    e.preventDefault();
+                                    if (!checkFieldErrors()) {
+                                        document.getElementById('answering-form').submit();
+                                    }
+                                });
                             });
 
                             const submitDiv = document.createElement('div');

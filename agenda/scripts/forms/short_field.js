@@ -6,6 +6,7 @@ export function shortField(question, label) {
     questionInput.id = `question-${question.id}`;
     questionInput.name = `question-${question.id}`;
     questionInput.placeholder = 'Sua resposta';
+
     if (parseInt(question.required)) {
         questionInput.required = true;
     } else {

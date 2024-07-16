@@ -1,4 +1,5 @@
-import { onlyNumber, validateCpf } from '../../utils/utils.js';
+import { onlyNumber, validator } from '../../utils/utils.js';
+import { showFieldError, clearFieldErrors } from './field_error.js';
 
 export function cpfField(question, label) {
     let questionInput = null;
@@ -15,7 +16,16 @@ export function cpfField(question, label) {
         }
     });
 
-    validateCpf(questionInput, document.getElementById('answering-form'));
+    
+
+    document.getElementById('answering-form').addEventListener('submit', (e) => {
+        if (!validator(String(questionInput.value))) {
+            e.preventDefault();
+            showFieldError("Digite um CPF valido !", questionInput);
+        } else {
+            clearFieldErrors(questionInput);
+        }
+    })
 
     onlyNumber(questionInput);
 
