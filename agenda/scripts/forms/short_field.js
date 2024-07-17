@@ -17,10 +17,14 @@ export function shortField(question, label) {
     // Validation
 
     document.getElementById('answering-form').addEventListener('submit', (e) => {
-        if (question.required && !questionInput.value) {
-            e.preventDefault();
-            showFieldError("Preencha este campo obrigatorio !", questionInput);
-        } else if (question.required) {
+        if (!questionInput.value) {
+            if (Number(question.required)) {
+                e.preventDefault();
+                showFieldError("Preencha este campo obrigatório !", questionInput);
+            } else {
+                clearFieldErrors(questionInput);
+            }
+        } else {
             clearFieldErrors(questionInput);
         }
     });

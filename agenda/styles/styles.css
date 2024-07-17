@@ -20,4 +20,7 @@ body {
 
     --question-bg-color: #e6ffdd;
     --grey-color: #aaaaaa;
+
+    --input-error-text: #ff6347;
+    --input-error-bg: #ffe5e5;
 }

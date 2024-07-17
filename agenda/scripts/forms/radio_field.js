@@ -33,10 +33,14 @@ export function radioField(question, label) {
     // Validation
 
     document.getElementById('answering-form').addEventListener('submit', (e) => {
-        if (question.required && !questionInput.value) {
-            e.preventDefault();
-            showFieldError("Preencha este campo obrigatorio !", questionInput);
-        } else if (question.required) {
+        if (!questionInput.value) {
+            if (Number(question.required)) {
+                e.preventDefault();
+                showFieldError("Responda à esta questão obrigatória !", questionInput);
+            } else {
+                clearFieldErrors(questionInput);
+            }
+        } else {
             clearFieldErrors(questionInput);
         }
     });

@@ -118,6 +118,17 @@ input.cpf-field[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 
+.input-error {
+    display: none;
+    border: 2px solid var(--input-error-text);
+    background-color: var(--input-error-bg);
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: var(--input-error-text);
+    margin: 0;
+}
+
 @media screen and (max-width: 1250px) {
     .question {
         width: 500px;

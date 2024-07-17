@@ -7,7 +7,7 @@ include_once ("./utils/base_url.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financiamento para pesquisa</title>
+    <title>Formulários FMJ</title>
 
     <!-- css -->
     <link rel="stylesheet" href="<?= BASE_URL . 'styles/styles.css' ?>">

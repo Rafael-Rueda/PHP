@@ -8,6 +8,7 @@ export function createFieldError(input) {
 export function clearFieldErrors(input) {
     const inputError = input.parentNode.querySelector('.input-error');
     inputError.textContent = '';
+    inputError.style.display = 'none';
 }
 
 export function checkFieldErrors() {
@@ -25,6 +26,8 @@ export function checkFieldErrors() {
 }
 
 export function showFieldError(message, input) {
-    input.parentNode.querySelector('.input-error').textContent = message;
+    const inputError = input.parentNode.querySelector('.input-error')
+    inputError.textContent = message;
+    inputError.style.display = 'block';
     input.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }

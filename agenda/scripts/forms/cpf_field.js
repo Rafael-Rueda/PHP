@@ -28,7 +28,7 @@ export function cpfField(question, label) {
 
     document.getElementById('answering-form').addEventListener('submit', (e) => {
         if (!questionInput.value) {
-            if (question.required) {
+            if (Number(question.required)) {
                 e.preventDefault();
                 showFieldError("Preencha este campo obrigatório !", questionInput);
             } else {
@@ -40,7 +40,7 @@ export function cpfField(question, label) {
                 }
             }
         } else {
-            if (question.required) {
+            if (Number(question.required)) {
                 clearFieldErrors(questionInput);
                 if (!validator(String(questionInput.value))) {
                     e.preventDefault();
